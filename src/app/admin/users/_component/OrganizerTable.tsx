@@ -87,7 +87,6 @@ const OrganizerTable = () => {
                         <Eye
                             size={22}
                             color='#78C0A8'
-                            onClick={() => setOpen(true)}
                             className='cursor-pointer'
                         />
                     </Link>

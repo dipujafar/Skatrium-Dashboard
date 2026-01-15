@@ -49,7 +49,7 @@ const Navbar = ({ collapsed, setCollapsed }: TNavbarProps) => {
           <h2 className='text-lg  font-medium'>
             Dashboard
             <span className='block  text-sm font-normal'>
-              {greeting}, {user?.name}
+              {greeting}, Alex Jr.
             </span>
           </h2>
         </div>

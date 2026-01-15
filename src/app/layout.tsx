@@ -15,10 +15,10 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: {
-    default: "Admin Dashboard | Wolf Pack",
-    template: "%s | SoleSwap",
+    default: "Admin Dashboard | Skatrium",
+    template: "%s | Skatrium",
   },
-  description: "This is Official Application Dashboard for SoleSwap",
+  description: "This is Official Application Dashboard for Skatrium.",
 };
 
 export default function RootLayout({
