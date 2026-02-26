@@ -1,6 +1,6 @@
 "use client";
 import PaginationSection from "@/components/shared/PaginationSection";
-import {  } from "./ProfileReportCard";
+import { EventData } from "./ProfileReportCard";
 import EventReportCard from "./EventReportCard";
 
 
