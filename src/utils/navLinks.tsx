@@ -12,6 +12,7 @@ import {
   LogOut,
   Megaphone,
   Podcast,
+  SquareStack,
   Star,
   Wallet,
   WalletCards,
@@ -30,20 +31,26 @@ export const navLinks = [
     label: <Link href={"/admin/users"}>Users</Link>,
   },
   {
+    key: "complains",
+    icon: <CircleAlert size={18} />,
+    label: <Link href={"/admin/complains"}>Complains</Link>,
+  },
+  {
     key: "events",
     icon: <Megaphone size={18} />,
     label: <Link href={"/admin/events"}>Events</Link>,
+  },
+  {
+    key: "Categories",
+    icon: <SquareStack size={18} />,
+    label: <Link href={"/admin/categories"}>Categories</Link>,
   },
   {
     key: "subscription",
     icon: <Podcast size={18} />,
     label: <Link href={"/admin/subscription"}>Subscriptions</Link>,
   },
-  {
-    key: "complains",
-    icon: <CircleAlert size={18} />,
-    label: <Link href={"/admin/complains"}>Complains</Link>,
-  },
+
   {
     key: "earning",
     icon: <Wallet size={18} />,

@@ -32,12 +32,12 @@ const AboutUsEditor = () => {
   return (
     <>
       <div className="flex items-center gap-2">
-        <span
+        {/* <span
           onClick={() => route.back()}
           className="cursor-pointer bg-main-color p-2 rounded-full"
         >
           <FaArrowLeft size={20} color="#fff" />
-        </span>
+        </span> */}
         <h4 className="text-2xl font-medium text-text-color">About Us</h4>
       </div>
       <ReactQuill

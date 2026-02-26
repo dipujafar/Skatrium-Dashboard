@@ -1,5 +1,4 @@
 "use client";
-
 import { Error_Modal, Success_model } from "@/lib/utils";
 import { useGetSettingsQuery, useUpdateSettingsMutation } from "@/redux/api/settingsApi";
 import { TSettings } from "@/types";
@@ -13,11 +12,10 @@ import "react-quill/dist/quill.snow.css";
 // Dynamically import ReactQuill with SSR disabled
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-const TermsConditionsEditor = () => {
+const CommunityGuidelinesEditor = () => {
   const route = useRouter();
   const [value, setValue] = useState("<p>Lorem ipsum dolor sit amet consectetur. Posuere leo nunc eu phasellus consequat egestas diam mattis magna. Dui nullam gravida turpis fames metus ultrices sed mattis. Amet vivamus mus eget purus purus at massa non. In tristique sapien etiam orci convallis. Viverra mauris consectetur integer nisl pellentesque potenti pharetra. Cras gravida ut ullamcorper urna mauris ultricies. Ridiculus aliquam nec sodales lacus proin sit dictumst id. Massa et vulputate ac viverra sit dignissim quis morbi. Malesuada sed ut ut etiam mattis.</p>");
   const [updateSetting] = useUpdateSettingsMutation();
-
   const toolbarOptions = [
     ["image"],
     [{ header: [1, 2, false] }],
@@ -37,7 +35,7 @@ const TermsConditionsEditor = () => {
   const handleUpdateSettings = async () => {
     try {
       await updateSetting({
-        terms: value,
+        privacy: value,
       }).unwrap();
 
       Success_model({ title: "Settings updated successfully" });
@@ -48,7 +46,7 @@ const TermsConditionsEditor = () => {
   };
   useEffect(() => {
     if (settingsData) {
-      setValue(settingsData.terms);
+      setValue(settingsData.privacy);
     }
   }, [settingsData]);
 
@@ -61,7 +59,7 @@ const TermsConditionsEditor = () => {
         >
           <FaArrowLeft size={20} color='#fff' />
         </span> */}
-        <h4 className='text-2xl font-medium text-text-color'>Terms & Conditions</h4>
+        <h4 className='text-2xl font-medium text-text-color'>Privacy Policy</h4>
       </div>
       <ReactQuill
         modules={moduleConest}
@@ -73,18 +71,19 @@ const TermsConditionsEditor = () => {
           border: "1px solid #EFE8FD",
           marginTop: "20px",
           borderRadius: "10px",
-          background: "#68c0a114",
+          backgroundColor: "#68c0a114",
         }}
+        className="placeholder:!text-white"
       />
       <Button
         size='large'
-        className='bg-[#fcb806] hover:!bg-[#fcb806]/90 text-white hover:!text-white border-none'
         block
+        className='bg-[#fcb806] hover:!bg-[#fcb806]/90 text-white hover:!text-white border-none'
         style={{
           marginTop: "20px",
         }}
         onClick={handleUpdateSettings}
-        disabled={!value || isLoading}
+        disabled={!value}
       >
         Save Changes
       </Button>
@@ -92,6 +91,6 @@ const TermsConditionsEditor = () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(TermsConditionsEditor), {
+export default dynamic(() => Promise.resolve(CommunityGuidelinesEditor), {
   ssr: false,
 });

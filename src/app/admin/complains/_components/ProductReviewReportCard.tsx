@@ -2,8 +2,8 @@
 import { Calendar, MapPin, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import ComplainsProfileReportModal from "@/components/modal/ComplainsProfileReportModal";
 import { useState } from "react";
+import ComplainsProductReviewModal from "@/components/modal/ComplainsProductReviewModal";
 
 export interface EventReview {
     userName: string;
@@ -12,7 +12,7 @@ export interface EventReview {
     comment: string;
 }
 
-export interface EventData {
+export interface ProfileData {
     id: string;
     title: string;
     image: string;
@@ -23,12 +23,12 @@ export interface EventData {
 }
 
 interface ProfileReportCardProps {
-    event: EventData;
+    event: ProfileData;
     onViewDetails?: (id: string) => void;
     onRemove?: (id: string) => void;
 }
 
-const ProfileReportCard = ({ event, onViewDetails, onRemove }: ProfileReportCardProps) => {
+const ProductReviewReportCard = ({ event, onViewDetails, onRemove }: ProfileReportCardProps) => {
     const [open, setOpen] = useState<boolean>(false);
     const renderStars = (rating: number) => {
         return Array.from({ length: 5 }, (_, i) => (
@@ -113,9 +113,9 @@ const ProfileReportCard = ({ event, onViewDetails, onRemove }: ProfileReportCard
                     </div>
                 </div>
             </div>
-            <ComplainsProfileReportModal open={open} setOpen={setOpen} />
+            <ComplainsProductReviewModal open={open} setOpen={setOpen} />
         </>
     );
 };
 
-export default ProfileReportCard;
+export default ProductReviewReportCard;

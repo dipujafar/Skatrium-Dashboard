@@ -1,11 +1,10 @@
 "use client";
 import PaginationSection from "@/components/shared/PaginationSection";
-import {  } from "./ProfileReportCard";
-import EventReportCard from "./EventReportCard";
+import ProfileReportCard from "./ProfileReportCard";
+import ProductReviewReportCard from "./ProductReviewReportCard";
 
 
-
-const eventsData: EventData[] = [
+const eventsData = [
     {
         id: "1",
         title: "Sunset Skate Session",
@@ -127,7 +126,7 @@ const eventsData: EventData[] = [
     }
 ];
 
-const EventReportContainer = () => {
+const ProductReviewReportContainer = () => {
     const handleViewDetails = (id: string) => {
         console.log("View details for event:", id);
     };
@@ -142,7 +141,7 @@ const EventReportContainer = () => {
             <div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center">
                     {eventsData.map((event) => (
-                        <EventReportCard
+                        <ProductReviewReportCard
                             key={event.id}
                             event={event}
                             onViewDetails={handleViewDetails}
@@ -156,4 +155,4 @@ const EventReportContainer = () => {
     );
 };
 
-export default EventReportContainer;
+export default ProductReviewReportContainer;

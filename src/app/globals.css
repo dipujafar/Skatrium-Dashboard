@@ -176,6 +176,12 @@
 }
 
 
+/* ============================ ant input related style ============================== */
+.ant-input::placeholder{
+  color :#95979e !important
+}
+
+
 /* ========================= rechart related style ================================ */
 tspan{
   fill: #ffffff !important;

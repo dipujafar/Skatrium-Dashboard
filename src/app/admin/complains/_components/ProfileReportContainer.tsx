@@ -3,7 +3,7 @@ import PaginationSection from "@/components/shared/PaginationSection";
 import ProfileReportCard from "./ProfileReportCard";
 
 
-const eventsData = [
+const profileReports = [
     {
         id: "1",
         title: "Sunset Skate Session",
@@ -139,7 +139,7 @@ const ProfileReportContainer = () => {
             <h4 className="text-[#93A4B0] text-xl font-semibold mb-4">All Reports </h4>
             <div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center">
-                    {eventsData.map((event) => (
+                    {profileReports.map((event) => (
                         <ProfileReportCard
                             key={event.id}
                             event={event}
