@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
-
 import { X, Plus } from "lucide-react"
 import { EditSubscriptionFormData, editSubscriptionSchema } from "./Schema";
 
@@ -18,9 +17,10 @@ type TPropsType = {
 const initialSubscription: EditSubscriptionFormData = {
     planName: "Starter",
     planDurations: [
-        { duration: "6 Month", price: "23" },
-        { duration: "12 Month", price: "45" },
+        { duration: "6 Month", price: "23", promo_code: "test" },
+        { duration: "12 Month", price: "45", promo_code: "test" },
     ],
+
 }
 
 
@@ -31,7 +31,7 @@ const EditSubscriptionModal = ({ open, setOpen }: TPropsType) => {
         resolver: zodResolver(editSubscriptionSchema),
         defaultValues: initialSubscription || {
             planName: "",
-            planDurations: [{ duration: "", price: "" }],
+            planDurations: [{ duration: "", price: "", promo_code: "" }],
         },
     })
 
@@ -83,7 +83,7 @@ const EditSubscriptionModal = ({ open, setOpen }: TPropsType) => {
                             <div className="space-y-4">
                                 {fields.map((field, index) => (
                                     <div key={field.id} className="space-y-3 pb-4 border-b border-neutral-700 last:border-b-0">
-                                        <div className="grid grid-cols-2 gap-4">
+                                        <div className="grid grid-cols-3 gap-4">
                                             {/* Duration Field */}
                                             <FormField
                                                 control={form.control}
@@ -93,7 +93,7 @@ const EditSubscriptionModal = ({ open, setOpen }: TPropsType) => {
                                                         <FormLabel className="text-white text-sm">Plan Duration</FormLabel>
                                                         <FormControl>
                                                             <Input
-                                                                placeholder="e.g., 6 Month, 1 Year"
+                                                                placeholder="Enter Duration"
                                                                 className="bg-neutral-800 border-neutral-700 text-white placeholder:text-neutral-500"
                                                                 {...field}
                                                             />
@@ -113,11 +113,31 @@ const EditSubscriptionModal = ({ open, setOpen }: TPropsType) => {
                                                         <FormControl>
                                                             <div className="relative">
                                                                 <Input
-                                                                    placeholder="0.00"
+                                                                    placeholder="Enter Price"
                                                                     className="bg-neutral-800 border-neutral-700 text-white placeholder:text-neutral-500"
                                                                     {...field}
                                                                 />
                                                                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500">$</span>
+                                                            </div>
+                                                        </FormControl>
+                                                        <FormMessage className="text-xs" />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                            {/*Promo Code Field */}
+                                            <FormField
+                                                control={form.control}
+                                                name={`planDurations.${index}.promo_code`}
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel className="text-white text-sm">Promo Code</FormLabel>
+                                                        <FormControl>
+                                                            <div className="relative">
+                                                                <Input
+                                                                    placeholder="Enter Promo Code"
+                                                                    className="bg-neutral-800 border-neutral-700 text-white placeholder:text-neutral-500"
+                                                                    {...field}
+                                                                />
                                                             </div>
                                                         </FormControl>
                                                         <FormMessage className="text-xs" />
@@ -143,7 +163,7 @@ const EditSubscriptionModal = ({ open, setOpen }: TPropsType) => {
 
                             <Button
                                 type="button"
-                                onClick={() => append({ duration: "", price: "" })}
+                                onClick={() => append({ duration: "", price: "", promo_code: "" })}
                                 className="w-full sm:w-auto bg-yellow-500 hover:bg-yellow-600 text-neutral-900 font-semibold"
                             >
                                 <Plus className="w-4 h-4 mr-2" />

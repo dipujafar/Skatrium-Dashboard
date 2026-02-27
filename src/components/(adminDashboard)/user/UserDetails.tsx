@@ -35,7 +35,7 @@ const UserDetails = ({ open: user, setOpen }: TPropsType) => {
         <div className='w-fit mx-auto relative'>
           <Image src={"/user_image.jpg"} alt='profile-picture' width={150} height={150} className="rounded-full object-cover" />
         </div>
-        <div className='mt-10  '>
+        <div className='mt-5'>
           <div className='flex justify-between bg-[#21424617] py-3 px-2 border-b '>
             <h4>User name </h4>
             <p className='font-medium'>Jane Cooper</p>

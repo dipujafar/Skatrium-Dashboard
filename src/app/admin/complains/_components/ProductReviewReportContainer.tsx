@@ -1,6 +1,5 @@
 "use client";
 import PaginationSection from "@/components/shared/PaginationSection";
-import ProfileReportCard from "./ProfileReportCard";
 import ProductReviewReportCard from "./ProductReviewReportCard";
 
 

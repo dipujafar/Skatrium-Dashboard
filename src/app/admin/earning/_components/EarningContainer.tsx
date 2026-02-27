@@ -3,7 +3,7 @@ import { StatCard } from "@/components/shared/StatCard";
 import { Tabs, TabsProps } from "antd";
 import { Wallet } from "lucide-react";
 import SubscriptionEarningsTable from "./SubscriptionEarningsTable";
-import CommissionEarningsTable from "./CommissionEarningsTable";
+import CommissionEarnings from "./CommissionEarnings";
 
 const items: TabsProps['items'] = [
   {
@@ -14,7 +14,7 @@ const items: TabsProps['items'] = [
   {
     key: '2',
     label: 'Commission Earnings',
-    children: <CommissionEarningsTable />,
+    children: <CommissionEarnings />,
   }
 ];
 

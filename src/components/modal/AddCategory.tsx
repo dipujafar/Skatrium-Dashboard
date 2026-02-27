@@ -40,7 +40,7 @@ const AddCategory = ({ open, setOpen }: TPropsType) => {
             // formData.append("image", data.image);
             // await fetch("/api/categories", { method: "POST", body: formData });
 
-            alert("Category saved successfully!");
+            // alert("Category saved successfully!");
             form.reset();
 
         } catch (error) {

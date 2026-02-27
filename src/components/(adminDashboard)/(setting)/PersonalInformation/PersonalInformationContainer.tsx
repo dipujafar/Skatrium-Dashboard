@@ -48,12 +48,6 @@ const PersonalInformationContainer = () => {
     <div>
       <div className='flex justify-between items-center'>
         <div className='flex items-center gap-3'>
-          <span
-            onClick={() => route.back()}
-            className='cursor-pointer bg-main-color p-2 rounded-full'
-          >
-            <FaArrowLeft size={20} color='#fff' />
-          </span>
           <h4 className='text-2xl font-medium text-text-color'>Personal Information</h4>
         </div>
         <div className={edit ? "hidden" : ""}>

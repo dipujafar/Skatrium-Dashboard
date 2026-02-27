@@ -60,8 +60,8 @@ export default function SubscriptionContainer() {
   const [tiers] = useState<PricingTier[]>(pricingData)
 
   return (
-    <div>
+    <>
       <SubscriptionCard tiers={tiers} />
-    </div>
+    </>
   )
 }

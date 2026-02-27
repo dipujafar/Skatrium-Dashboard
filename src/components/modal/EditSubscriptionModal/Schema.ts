@@ -3,6 +3,7 @@ import { z } from "zod"
 export const planDurationSchema = z.object({
   duration: z.string().min(1, "Duration is required"),
   price: z.string().regex(/^\d+(\.\d{1,2})?$/, "Price must be a valid number"),
+  promo_code: z.string().min(1, "Promo code is required"),
 })
 
 export const editSubscriptionSchema = z.object({
