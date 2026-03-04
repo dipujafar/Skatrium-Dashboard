@@ -11,6 +11,7 @@ import {
   Handshake,
   ListChecks,
   LogOut,
+  Mail,
   Megaphone,
   Podcast,
   SquareStack,
@@ -30,6 +31,11 @@ export const navLinks = [
     key: "users",
     icon: <GoPeople size={18} />,
     label: <Link href={"/admin/users"}>Users</Link>,
+  },
+  {
+    key: "subscribe-email",
+    icon: <Mail size={18} />,
+    label: <Link href={"/admin/subscribe-email"}>Subscribe Email</Link>,
   },
   {
     key: "complains",
