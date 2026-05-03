@@ -1,3 +1,6 @@
-export const authRoutes = ["/login", "/forget-password", "/verify-email", "/reset-password"];
-
-export const adminRoutes = ["/admin"];
+export const authRoutes = [
+  "/login",
+  "/forget-password",
+  "/reset-password",
+  "/verify-email",
+];

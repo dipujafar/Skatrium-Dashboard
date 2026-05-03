@@ -35,13 +35,13 @@ const LoginForm = () => {
       }
       const res = await login(userData).unwrap();
 
-      if (res?.data?.accessToken) {
+
+      if (res?.data?.token) {
         Success_model({ title: "Login Successful" });
         dispatch(
           setUser({
-            user: jwtDecode(res?.data?.accessToken),
-            token: res?.data?.accessToken,
-            refreshToken: res?.data?.refreshToken,
+            user: jwtDecode(res?.data?.token),
+            token: res?.data?.token,
           }),
         );
 
@@ -49,7 +49,6 @@ const LoginForm = () => {
         router.refresh();
       }
 
-      router.push("/");
     } catch (error: any) {
       Error_Modal({ title: error?.data?.message });
     }
@@ -89,7 +88,7 @@ const LoginForm = () => {
         name='password'
         rules={[{ required: true, message: "Please input your password!" }]}
       >
-        <Input
+        <Input.Password
           type='password'
           size='large'
           className='placeholder:!text-[#818181] placeholder:!text-sm'

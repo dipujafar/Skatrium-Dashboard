@@ -11,10 +11,13 @@ import {
 import useGreeting from "@/hooks/useGreeting";
 import { cn } from "@/lib/utils";
 import { useGetProfileQuery } from "@/redux/api/userApi";
+import { logout } from "@/redux/features/authSlice";
+import { useAppDispatch } from "@/redux/hooks";
 import { TUser } from "@/types";
 import { Avatar, Badge, Flex } from "antd";
 import { ChevronRight, X } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FaBars } from "react-icons/fa6";
 import { IoNotificationsOutline } from "react-icons/io5";
 
@@ -28,7 +31,8 @@ const Navbar = ({ collapsed, setCollapsed }: TNavbarProps) => {
 
   const { data, isLoading } = useGetProfileQuery([]);
   const user = data?.data as TUser;
-
+  const dispatch = useAppDispatch();
+  const router = useRouter();
   const notificationCount = user?._count?.notifications || 0;
 
   return (
@@ -110,9 +114,9 @@ const Navbar = ({ collapsed, setCollapsed }: TNavbarProps) => {
                 </MenubarItem>
               </Link>
               <MenubarSeparator />
-              <Link href={"/login"}>
+              <div onClick={() => { dispatch(logout()); router.refresh() }} >
                 <MenubarItem className='hover:bg-gray-100 cursor-pointer'>Logout</MenubarItem>
-              </Link>
+              </div>
             </MenubarContent>
           </MenubarMenu>
         </Menubar>

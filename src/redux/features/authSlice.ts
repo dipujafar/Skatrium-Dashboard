@@ -22,8 +22,8 @@ const authSlice = createSlice({
       state.token = token;
 
       // Store token in Cookies for middleware authentication
-      Cookies.set("wolf-pack-access-token", token, { path: "/" });
-      Cookies.set("refresh-token", refreshToken, { path: "/" });
+      Cookies.set("skatrium-access-token", token, { path: "/" });
+      // Cookies.set("refresh-token", refreshToken, { path: "/" });
     },
 
     logout: (state) => {
@@ -31,8 +31,8 @@ const authSlice = createSlice({
       state.token = null;
 
       // Remove token from cookie
-      Cookies.remove("wolf-pack-access-token", { path: "/" });
-      Cookies.remove("refresh-token", { path: "/" });
+      Cookies.remove("skatrium-access-token", { path: "/" });
+      // Cookies.remove("refresh-token", { path: "/" });
     },
   },
 });
