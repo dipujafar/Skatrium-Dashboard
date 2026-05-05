@@ -8,8 +8,19 @@ import { SlGlobe } from "react-icons/sl";
 import { FaLink } from "react-icons/fa6";
 import Link from "next/link"
 import { Image } from "antd"
+import { useSearchParams } from "next/navigation"
+import { useGetOrganizerDetailsQuery } from "@/redux/api/userApi"
 
 export default function OrganizerPage() {
+
+    const id = useSearchParams().get("id");
+    const { data } = useGetOrganizerDetailsQuery(id, { skip: !id });
+
+
+    console.log(data);
+
+
+
     const [formData, setFormData] = useState({
         firstName: "Jane",
         lastName: "Cooper",
@@ -77,11 +88,11 @@ export default function OrganizerPage() {
                     </div>
                     <div>
                         <label className="text-white text-sm font-medium block mb-1">Instagram Link</label>
-                       <Link href={formData.instagramLink} target="_blank"  className="text-gray-400  break-all"><IoLogoInstagram size={28} /></Link>
+                        <Link href={formData.instagramLink} target="_blank" className="text-gray-400  break-all"><IoLogoInstagram size={28} /></Link>
                     </div>
                     <div>
                         <label className="text-white text-sm font-medium block mb-1">Website Link</label>
-                        <Link href={formData.websiteLink} target="_blank"  className="text-gray-400  break-all"><SlGlobe size={28} /></Link>
+                        <Link href={formData.websiteLink} target="_blank" className="text-gray-400  break-all"><SlGlobe size={28} /></Link>
                     </div>
                 </div>
             </div>
@@ -112,7 +123,7 @@ export default function OrganizerPage() {
                         <label className="text-white text-sm font-medium block mb-2">
                             Links to previous events or social media
                         </label>
-                      <Link href={formData.previousEventsLink} className="text-gray-400  break-all"><FaLink size={34} /></Link>
+                        <Link href={formData.previousEventsLink} className="text-gray-400  break-all"><FaLink size={34} /></Link>
                     </div>
                 </div>
             </div>

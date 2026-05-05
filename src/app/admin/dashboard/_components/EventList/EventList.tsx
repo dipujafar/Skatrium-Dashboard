@@ -1,7 +1,6 @@
 import EventCard from '@/components/cards/EventCard'
 import EmptyData from '@/components/shared/EmptyData'
 import { Event } from '@/types'
-import { Empty } from 'antd'
 import React from 'react'
 
 
@@ -16,10 +15,10 @@ export default function EventList({ data }: { data: Event[] }) {
             </div>
 
             {
-                !data?.length && <EmptyData message='No upcoming events' />
+                data?.length === 0 && <EmptyData message='No upcoming events' />
             }
 
-            {data?.length && <div className='space-y-5'>
+            {data?.length > 0 && <div className='space-y-5'>
                 {
                     data?.map((event: Event, index: number) => (
                         <EventCard key={index} event={event} />

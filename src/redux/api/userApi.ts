@@ -38,6 +38,13 @@ const userApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.user],
     }),
+    getMarchantDetails: builder.query({
+      query: (id) => ({
+        url: `/users/marchant-profile/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.user],
+    }),
 
     updateProfile: builder.mutation({
       query: (data) => ({
@@ -83,5 +90,6 @@ export const {
   useBlockedUserMutation,
   useUnBlockedUserMutation,
   useGetUsersByRoleQuery,
-  useGetOrganizerDetailsQuery 
+  useGetOrganizerDetailsQuery,
+  useGetMarchantDetailsQuery,
 } = userApi;

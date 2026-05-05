@@ -96,7 +96,7 @@ const OrganizerTable = () => {
             //align: "center",
             render: (text, record) => (
                 <div className='flex items-center gap-2'>
-                    <Link href={`/admin/users/organizer`}>
+                    <Link href={`/admin/users/organizer?id=${record?._id}`}>
                         <Eye
                             size={22}
                             color='#78C0A8'
