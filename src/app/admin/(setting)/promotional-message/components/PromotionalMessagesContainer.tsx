@@ -88,7 +88,6 @@ const PromotionalMessagesContainer = () => {
       await deletePromotion(id).unwrap();
       Success_model({ title: "Promotional message deleted successfully" });
     } catch (error: any) {
-      console.log(error);
       Error_Modal({ title: error?.data?.message });
     }
   };

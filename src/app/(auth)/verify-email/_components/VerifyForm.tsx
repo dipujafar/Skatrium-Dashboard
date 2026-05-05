@@ -4,7 +4,7 @@ import { Error_Modal, Success_model } from "@/lib/utils";
 import { useResendOtpMutation, useVerifyOtpMutation } from "@/redux/api/authApi";
 import type { FormProps } from "antd";
 import { Button, Form, Input } from "antd";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
 type FieldType = {
@@ -19,16 +19,17 @@ const VerifyEmailForm = () => {
   const route = useRouter();
   const [verifyOtp, { isLoading }] = useVerifyOtpMutation();
   const [reSendOtp] = useResendOtpMutation();
+  const email = useSearchParams().get("email");
 
   //handle otp verification
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
     try {
-      // const res = await verifyOtp({ otp: Number(values?.otp) }).unwrap();
-      
-        //sessionStorage.setItem("token", res?.data?.token);
-        // Success_model({ title: "Otp verified successfully." });
-        // sessionStorage.removeItem("email");
-        route.push("/reset-password");
+      const res = await verifyOtp({ otp: Number(values?.otp) }).unwrap();
+
+      sessionStorage.setItem("token", res?.data?.token);
+      Success_model({ title: "Otp verified successfully." });
+      // sessionStorage.removeItem("email");
+      route.push(`/reset-password?email=${email}`);
 
     } catch (error) {
       // @ts-expect-error: Ignoring TypeScript error due to inferred 'any' type for 'values' which is handled in the form submit logic
@@ -49,7 +50,7 @@ const VerifyEmailForm = () => {
       const res = await reSendOtp({ email }).unwrap();
       sessionStorage.setItem("token", res?.data?.token);
       Success_model({ title: "An otp re-sent to your email" });
-    } catch (error:any) {
+    } catch (error: any) {
       Error_Modal({ title: error?.data?.message });
     }
   };
@@ -79,6 +80,8 @@ const VerifyEmailForm = () => {
         className='group'
         htmlType='submit'
         size='large'
+        disabled={isLoading}
+        loading={isLoading}
         block
       >
         Verify Email <AnimatedArrow size={20} />

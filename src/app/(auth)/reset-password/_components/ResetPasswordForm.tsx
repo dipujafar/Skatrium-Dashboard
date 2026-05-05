@@ -4,7 +4,7 @@ import { Error_Modal, Success_model } from "@/lib/utils";
 import { useReSetPasswordMutation } from "@/redux/api/authApi";
 import type { FormProps } from "antd";
 import { Button, Form, Input } from "antd";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type FieldType = {
   setPassword?: string;
@@ -16,9 +16,10 @@ const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
 };
 
 const ResetPasswordForm = () => {
+  const email = useSearchParams().get("email");
   const route = useRouter();
 
-  const [resetPassword] = useReSetPasswordMutation();
+  const [resetPassword, { isLoading }] = useReSetPasswordMutation();
 
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
     if (values?.setPassword !== values?.reSetPassword) {
@@ -27,13 +28,18 @@ const ResetPasswordForm = () => {
 
     try {
       const res = await resetPassword({
-        password: values?.setPassword,
+        email,
+        newPassword: values?.setPassword,
+        confirmPassword: values?.reSetPassword,
       }).unwrap();
+
+
       if (res.success) {
+        sessionStorage.removeItem("token");
         Success_model({ title: "Password reset successfully!!" });
         route.push("/login");
       }
-    } catch (error:any) {
+    } catch (error: any) {
       Error_Modal(error?.data?.message);
     }
   };
@@ -78,6 +84,8 @@ const ResetPasswordForm = () => {
         className='group'
         htmlType='submit'
         size='large'
+        disabled={isLoading}
+        loading={isLoading}
         block
       >
         Sign In <AnimatedArrow size={20} />

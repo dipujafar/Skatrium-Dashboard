@@ -1,5 +1,6 @@
 import { baseApi } from "./baseApi";
 import { tagTypes } from "../tagTypes";
+import { number } from "zod";
 
 const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -12,68 +13,30 @@ const userApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.users],
     }),
 
-    allUser: builder.query({
-      query: (query: { label: string; value: string }[]) => {
-        const params = new URLSearchParams();
-        query.forEach(({ label, value }) => {
-          if (label && value) {
-            params.append(label, value);
-          }
-        });
-        return {
-          url: "user/users",
-          method: "GET",
-          params,
-        };
-      },
-      providesTags: [tagTypes.users],
-    }),
-    topUsers: builder.query({
-      query: (query: { label: string; value: string }[]) => {
-        const params = new URLSearchParams();
-        query.forEach(({ label, value }) => {
-          if (label && value) {
-            params.append(label, value);
-          }
-        });
-        return {
-          url: "user/top-performers",
-          method: "GET",
-          params,
-        };
-      },
-      providesTags: [tagTypes.users],
-    }),
-
-    getSingleUser: builder.query({
-      query: (id) => ({
-        url: `/user/${id}`,
+    getAllUser: builder.query({
+      query: (params) => ({
+        url: "/admin/allusers",
         method: "GET",
-      }),
-      providesTags: [tagTypes.user],
-    }),
-    getBadges: builder.query({
-      query: (id) => ({
-        url: `/user/badges/${id}`,
-        method: "GET",
+        params,
       }),
       providesTags: [tagTypes.user],
     }),
 
-    getPrizeWinners: builder.query({
-      query: () => ({
-        url: `/user/prize-winner`,
+    getUsersByRole: builder.query({
+      query: (params) => ({
+        url: "/users/getby-roll",
         method: "GET",
+        params,
       }),
+      providesTags: [tagTypes.user],
     }),
 
-    updateUser: builder.mutation({
-      query: ({ id, data }) => ({
-        url: `/users/${id}`,
-        method: "PATCH",
-        body: data,
+    getOrganizerDetails: builder.query({
+      query: (id) => ({
+        url: `/users/organizer-profile/${id}`,
+        method: "GET",
       }),
-      invalidatesTags: [tagTypes.users],
+      providesTags: [tagTypes.user],
     }),
 
     updateProfile: builder.mutation({
@@ -92,28 +55,20 @@ const userApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.user],
     }),
-    deleteUser: builder.mutation({
+
+    blockedUser: builder.mutation({
       query: (id) => ({
-        url: `/user/delete-user/${id}`,
-        method: "DELETE",
-      }),
-      invalidatesTags: [tagTypes.users],
-    }),
-    updateUserStatus: builder.mutation({
-      query: ({ data, id }) => ({
-        url: `/user/${id}`,
+        url: `/admin/block/${id}`,
         method: "PATCH",
-        body: data,
       }),
-      invalidatesTags: [tagTypes.users],
+      invalidatesTags: [tagTypes.user, tagTypes.dashboard],
     }),
-    uploadFiles: builder.mutation({
-      query: (data) => ({
-        url: "/user/upload-files",
-        method: "POST",
-        //headers: { "Content-Type": "multipart/form-data" },
-        body: data,
+    unBlockedUser: builder.mutation({
+      query: (id) => ({
+        url: `/admin/unblock/${id}`,
+        method: "PATCH",
       }),
+      invalidatesTags: [tagTypes.user, tagTypes.dashboard],
     }),
   }),
 
@@ -122,15 +77,11 @@ const userApi = baseApi.injectEndpoints({
 
 export const {
   useCreateUserMutation,
-  useAllUserQuery,
-  useGetSingleUserQuery,
+  useGetAllUserQuery,
   useUpdateProfileMutation,
   useGetProfileQuery,
-  useUpdateUserMutation,
-  useDeleteUserMutation,
-  useUpdateUserStatusMutation,
-  useGetBadgesQuery,
-  useTopUsersQuery,
-  useGetPrizeWinnersQuery,
-  useUploadFilesMutation,
+  useBlockedUserMutation,
+  useUnBlockedUserMutation,
+  useGetUsersByRoleQuery,
+  useGetOrganizerDetailsQuery 
 } = userApi;

@@ -4,7 +4,6 @@ import { authRoutes } from "./utils/authRoutes";
 export default function middleware(req: any) {
   const { nextUrl } = req;
   const isLoggedIn = req.cookies.get("skatrium-access-token")?.value;
-  console.log(isLoggedIn);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
   if (isAuthRoute && isLoggedIn) {

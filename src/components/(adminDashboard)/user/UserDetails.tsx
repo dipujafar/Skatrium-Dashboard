@@ -1,14 +1,23 @@
 import { cn } from "@/lib/utils";
 import { Image, Modal } from "antd";
 import moment from "moment";
+import { useEffect, useState } from "react";
 import { RiCloseLargeLine } from "react-icons/ri";
 
 type TPropsType = {
   open: boolean;
   setOpen: (collapsed: boolean) => void;
+  data: any
 };
 
-const UserDetails = ({ open: user, setOpen }: TPropsType) => {
+const UserDetails = ({ open: user, setOpen, data }: TPropsType) => {
+  const [currentData, setCurrentData] = useState<any>();
+
+  useEffect(() => {
+    setCurrentData(data);
+  }, [data]);
+
+
   return (
     <Modal
       open={!!user}
@@ -33,22 +42,22 @@ const UserDetails = ({ open: user, setOpen }: TPropsType) => {
           </div>
         </div>
         <div className='w-fit mx-auto relative'>
-          <Image src={"/user_image.jpg"} alt='profile-picture' width={150} height={150} className="rounded-full object-cover" />
+          {currentData?.image?.url ? <Image src={currentData?.image?.url} alt='profile-picture' width={150} height={150} className="rounded-full object-cover" /> : <div className='size-[100px] aspect-square object-cover rounded-full bg-[#312912] flex items-center justify-center text-white text-2xl font-semibold'>{currentData?.fullName?.charAt(0)?.toUpperCase()}</div>}
         </div>
         <div className='mt-5'>
           <div className='flex justify-between bg-[#21424617] py-3 px-2 border-b '>
             <h4>User name </h4>
-            <p className='font-medium'>Jane Cooper</p>
+            <p className='font-medium'>{currentData?.fullName}</p>
           </div>
 
           <div className='flex justify-between py-3  px-2 border-b'>
             <h4>Email </h4>
-            <p className='font-medium'>user0@example.com</p>
+            <p className='font-medium'>{currentData?.email}</p>
           </div>
 
           <div className='flex justify-between bg-[#21424617] py-3 px-2 border-b'>
             <h4>Contact Number </h4>
-            <p className='font-medium'>+1 555 123-4567</p>
+            <p className='font-medium'>{currentData?.phoneNumber || "N/A"}</p>
           </div>
 
 
@@ -63,7 +72,7 @@ const UserDetails = ({ open: user, setOpen }: TPropsType) => {
           </div>*/}
           <div className='flex justify-between  bg-[#21424617] py-3 px-2 border-b'>
             <h4>Role</h4>
-            <p className='font-medium capitalize'>{"User"}</p>
+            <p className='font-medium capitalize'>{(currentData?.role as string)?.toLocaleLowerCase()}</p>
           </div>
           {/*<div className='flex justify-between   py-3 px-2 border-b'>
             <h4>Subscription Plan </h4>
@@ -79,12 +88,12 @@ const UserDetails = ({ open: user, setOpen }: TPropsType) => {
           </div>*/}
           <div className='flex justify-between  bg-[#21424617] py-3 px-2 border-b'>
             <h4>Status </h4>
-            <p className={cn('font-medium text-green-500')}>{"Active"}</p>
+            <p className={cn("text-[#4BB54B]", !currentData?.isActive && 'text-[#ee0808]')}>{currentData?.isActive ? "Active" : "Blocked"}</p>
           </div>
 
           <div className='flex justify-between py-3 px-2 border-b'>
             <h4>Date of Join </h4>
-            <p className='font-medium'>{moment("2025-01-02").format("LL")}</p>
+            <p className='font-medium'>{moment(currentData?.createdAt).format("LL")}</p>
           </div>
         </div>
       </div>

@@ -24,8 +24,6 @@ export type TActivityItem = {
   icon: string;
 };
 
-import { JwtPayload } from "jwt-decode";
-
 export type TMeta = {
   page: number;
   limit: number;
@@ -42,7 +40,6 @@ export type TResponse<T> = {
 };
 export type TUserRole = "ADMIN" | "USER";
 
-export type TTokenUser = { email: string; role: TUserRole; id: string } & JwtPayload;
 export type TUser = {
   id: string;
   name: string;
@@ -66,63 +63,10 @@ export type TUser = {
   avgDealAmount: number;
   rank: number;
   fcmToken?: string;
-  myAchievements: TAchievement[];
   _count: {
     notifications: number;
   };
 };
-
-export type TMetaCount = {
-  totalActiveUsers: number;
-  totalUser: number;
-  totalCloser: number;
-  totalClient: number;
-  totalRevenue: number;
-  totalDealClosed: number;
-  totalCommissionPaid: number;
-  totalRevenueWithPaidCommission: number;
-};
-
-export interface TCloser {
-  id: string;
-  clientId: string;
-  userId: string;
-  proposition: string;
-  dealDate: string;
-  status: string;
-  amount: number;
-  notes: string;
-  createdAt: string;
-  updatedAt: string;
-  client: TClient;
-  closerDocuments: CloserDocument[];
-  user: User;
-}
-
-export interface TClient {
-  id: string;
-  name: string;
-  offer: string;
-  userId: string;
-  targetAudience: string;
-  contact: string;
-  location: string;
-  revenueTarget: number;
-  commissionRate: number;
-  createdAt: string;
-  updatedAt: string;
-  user?: User;
-  closer?: TCloser;
-}
-
-export interface CloserDocument {
-  id: string;
-  closerId: string;
-  document: string;
-  path: string;
-  createdAt: string;
-  updatedAt: string;
-}
 
 export interface User {
   id: string;
@@ -132,33 +76,6 @@ export interface User {
   about: string;
   registeredId: string;
 }
-
-//export type TBadges = {
-//  currentBadge: TBadge | null;
-//  upComingBadge: TBadge | null;
-//  progressToNext: number;
-//  data: TBadge[];
-//};
-
-//export type TBadge = {
-//  id: string;
-//  name: string;
-//  dealCount: number;
-//  description: string;
-//  icon: string;
-//  iconPath: string;
-//  createdAt: string;
-//  updatedAt: string;
-//};
-
-//export type TLeague = {
-//  id: string;
-//  name: string;
-//  dealAmount: number;
-//  description: string;
-//  createdAt: string;
-//  updatedAt: string;
-//};
 
 export type TSettings = {
   id: string;
@@ -179,71 +96,40 @@ export type TNotification = {
   updatedAt: string;
 };
 
-export type TAchievement = {
-  id: string;
-  userId: string;
-  achievementId: string;
-  createdAt: string;
-  updatedAt: string;
-  achievement: {
-    id: string;
-    name: string;
-    salesCount: number;
-    dealCount: number;
-    revenue: number;
-    createdAt: string;
-    updatedAt: string;
-  };
+
+type Coordinates = {
+  type: "Point";
+  coordinates: [number, number]; // [longitude, latitude]
 };
 
-export interface TPrize {
+type Image = {
   id: string;
-  name: string;
-  month: number;
-  year: number;
-  isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
-  entries: Entry[];
-}
-
-export type TSinglePrizeData = {
-  id: string;
-  name: string;
-  month: number;
-  year: number;
-  isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
-  entries: Entry[];
-
-  topUsers: {
-    id: string;
-    name: string;
-    profilePicture: string;
-    salesCount: number;
-    dealCount: number;
-    dealClosedCount: number;
-  }[];
+  url: string;
+  _id?: string;
 };
 
-export interface Entry {
-  id: string;
-  rank: number;
+type Category = {
+  _id: string;
   name: string;
-  icon: string;
-  prizeId: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export type TPromotion = {
   id: string;
+};
+
+type Host = {
+  _id: string;
+  fullName: string;
+  image: Image;
+};
+
+export type Event = {
+  _id: string;
   title: string;
-  emails: string[];
-  datetime: string;
-  message: string;
-  isTrigger: boolean;
-  createdAt: string;
-  updatedAt: string;
+  category: Category;
+  date: string; 
+  host: Host;
+  location: Coordinates;
+  coverImage: Image;
 };
+
+
+
+

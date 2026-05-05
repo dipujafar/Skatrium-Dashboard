@@ -63,7 +63,7 @@ const SidebarContainer = ({ collapsed }: { collapsed: boolean }) => {
             <Image
               src={logo}
               alt='logo_Image'
-              className={cn(`lg:px-1  object-cover`,!collapsed && "h-[100px]")}
+              className={cn(`lg:px-1  object-contain`,!collapsed && "h-[100px]")}
             />
           </Link>
 

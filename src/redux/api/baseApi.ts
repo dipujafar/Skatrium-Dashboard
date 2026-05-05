@@ -11,6 +11,8 @@ const baseQuery = fetchBaseQuery({
     const forgotPasswordToken = sessionStorage.getItem("forgotPasswordToken");
     const token = (getState() as any).auth.token;
 
+    headers.set("ngrok-skip-browser-warning", "true");
+    
     if (token) {
       headers.set("authorization", `Bearer ${token}`);
     }
@@ -25,7 +27,11 @@ const baseQuery = fetchBaseQuery({
   },
 });
 
-const baseQueryWithRefreshToken = async (args: any, api: any, extraOptions: any) => {
+const baseQueryWithRefreshToken = async (
+  args: any,
+  api: any,
+  extraOptions: any,
+) => {
   let result = await baseQuery(args, api, extraOptions);
 
   console.log(result, "result");
@@ -38,12 +44,15 @@ const baseQueryWithRefreshToken = async (args: any, api: any, extraOptions: any)
         api.dispatch(logout());
         return result;
       }
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/refresh-token`, {
-        credentials: "include",
-        body: JSON.stringify({
-          refreshToken,
-        }),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/auth/refresh-token`,
+        {
+          credentials: "include",
+          body: JSON.stringify({
+            refreshToken,
+          }),
+        },
+      );
       const data = await res.json();
       if (data?.data?.accessToken) {
         const user = api.getState().auth.user;

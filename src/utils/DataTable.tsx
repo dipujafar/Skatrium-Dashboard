@@ -1,48 +1,42 @@
+"use client";
 import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
-import { Pagination, Table } from "antd";
-import { TableProps } from "antd/lib/table";
+import { Table } from "antd";
 import { useSearchParams } from "next/navigation";
 
-interface DataTableProps<T> {
-  columns: TableProps<T>["columns"];
-  data: T[];
-  pageSize?: number;
-  total?: number;
-  currentPage?: number;
-  loading?: boolean;
-  pagination?: boolean;
-  onPageChange?: (page: number, pageSize: number) => void;
-}
-
-const DataTable = <T extends object>({
+const DataTable = ({
   columns,
   data,
-  pageSize = 10,
+  pageSize,
   total,
-  loading = false,
-  pagination = true,
-}: DataTableProps<T>) => {
+  isLoading
+}: {
+  columns: any;
+  data: any;
+  pageSize?: number;
+  total?: number;
+  isLoading?: boolean;
+}) => {
   const updateParams = useUpdateSearchParams();
   const page = useSearchParams()?.get("page") || "1";
   return (
     <Table
       columns={columns}
       dataSource={data}
-      loading={loading}
-      rowKey={(record) => (record as any).id || Math.random()} // prevent key warnings
+      loading={isLoading}
       pagination={
-        pagination
+       ( pageSize && total! > pageSize)
           ? {
-            pageSize,
-            defaultCurrent: Number(page) || 1,
-            total: total ?? data?.length,
-            onChange: (page) => {
-              updateParams({ page: page.toString() });
-            },
-          }
+              pageSize,
+              defaultCurrent: Number(page) || 1,
+              total: total ?? data?.length,
+              onChange: (page) => {
+                updateParams({ page: page.toString()});
+              },
+            }
           : false
       }
       scroll={{ x: "max-content" }}
+      rowKey={(record) => record.id || record.key} // always good to add rowKey
     />
   );
 };

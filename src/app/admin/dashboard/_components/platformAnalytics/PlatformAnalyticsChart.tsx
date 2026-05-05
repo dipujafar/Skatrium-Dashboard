@@ -5,7 +5,7 @@ import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import { ChevronDown } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { earningData } from "@/data";
+
 import { useState } from "react";
 
 const CustomTooltip = ({ active, payload }: any) => {
@@ -13,7 +13,7 @@ const CustomTooltip = ({ active, payload }: any) => {
         return (
             <div className='custom-tooltip bg-white p-3 shadow-md rounded-md border border-gray-100'>
                 <p className='text-sm font-medium text-black'>{payload[0].value.toLocaleString()}</p>
-                <p className='text-xs text-gray-500'>{payload[0].payload.month}</p>
+                <p className='text-xs text-gray-500'>{payload[0].payload.name}</p>
             </div>
         );
     }
@@ -21,19 +21,19 @@ const CustomTooltip = ({ active, payload }: any) => {
 };
 
 interface EarningsChartProps {
+    data: any;
     className?: string;
+    selectedYear: number;
+    setSetSelectedYear: (year: number) => void;
 }
 
-const PlatformAnalyticsChart = ({ className }: EarningsChartProps) => {
-    const currentYear = new Date().getFullYear();
-    const startYear = 2024;
+const PlatformAnalyticsChart = ({ data, className, selectedYear, setSetSelectedYear }: EarningsChartProps) => {
+
+    const startYear = 2026;
 
     // Ensure we start from 2024, and include the current year + next 3 years
-    const yearsArray = Array.from(
-        { length: currentYear - startYear + 1 },
-        (_, index) => startYear + index,
-    );
-    const [selectedYear, setSetSelectedYear] = useState(currentYear);
+    const yearsArray = Array.from({ length: 4 }, (_, index) => startYear + index);
+   
     return (
         <Card className={`p-3 !bg-transparent border border-[#FFFFFF33]/[0.2] rounded-2xl ${className}`}>
             <CardHeader>
@@ -84,7 +84,7 @@ const PlatformAnalyticsChart = ({ className }: EarningsChartProps) => {
                 >
                     <ResponsiveContainer width='100%' height='100%'>
                         <AreaChart
-                            data={earningData}
+                            data={data?.data}
                             margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
                             className='h-[300px]'
                         >
@@ -94,18 +94,18 @@ const PlatformAnalyticsChart = ({ className }: EarningsChartProps) => {
                                     <stop offset='80%' stopColor='#A28F59' stopOpacity={0.08} />
                                 </linearGradient>
                             </defs>
-                            <XAxis dataKey='month' axisLine={true} tickLine={true} tick={{ fontSize: 12 }} />
+                            <XAxis dataKey='name' axisLine={true} tickLine={true} tick={{ fontSize: 12 }} />
                             <YAxis
                                 axisLine={false}
                                 tickLine={false}
                                 tick={{ fontSize: 12 }}
-                                tickFormatter={(value) => `${value / 1000}k`}
+                                
                             />
                             <ChartTooltip content={<CustomTooltip />} />
 
                             <Area
                                 type='monotone'
-                                dataKey='income'
+                                dataKey='count'
                                 stroke='#FCB806'
                                 strokeWidth={1}
                                 fillOpacity={1}

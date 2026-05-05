@@ -7,10 +7,6 @@ import CountUp from "react-countup";
 interface StatCardProps {
   title: string;
   value: string | number;
-  change: {
-    value: string;
-    positive: boolean;
-  };
   className?: string;
   icon?: ReactNode;
   prefix?: string;

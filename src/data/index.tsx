@@ -115,20 +115,6 @@ export const activityData: TActivityItem[] = [
   },
 ];
 
-export const earningData = [
-  { month: "Jan", income: 32000, expense: 20000 },
-  { month: "Feb", income: 28000, expense: 24000 },
-  { month: "Mar", income: 25000, expense: 18000 },
-  { month: "Apr", income: 12000, expense: 6000 },
-  { month: "May", income: 28000, expense: 24000 },
-  { month: "Jun", income: 22000, expense: 18000 },
-  { month: "Jul", income: 18000, expense: 22000 },
-  { month: "Aug", income: 25000, expense: 30000 },
-  { month: "Sep", income: 30000, expense: 28000 },
-  { month: "Oct", income: 32000, expense: 28000 },
-  { month: "Nov", income: 28000, expense: 22000 },
-  { month: "Dec", income: 24000, expense: 18000 },
-];
 
 
   export const samplePromptsData = [

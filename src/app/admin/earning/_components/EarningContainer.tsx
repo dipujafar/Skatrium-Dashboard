@@ -27,7 +27,6 @@ const EarningContainer = () => {
           prefix="$"
           value={"100"}
           suffix={"K+ Sales"}
-          change={{ value: "+11.01%", positive: true }}
           icon={<Wallet />}
           className='bg-[#211604]'
         />
@@ -35,7 +34,6 @@ const EarningContainer = () => {
           title='Subscription Earning'
           value={"100"}
           suffix={"+K"}
-          change={{ value: "+6.08%", positive: true }}
           icon={<Wallet />}
           className='bg-[#211604]'
         />
