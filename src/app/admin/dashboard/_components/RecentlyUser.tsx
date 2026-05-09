@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 import BlockUser from "@/components/shared/BlockUser";
 
 type TUser = {
-  _id: number;
+  _id: string;
   fullName: string;
   email: string;
   date: string;
@@ -21,6 +21,21 @@ type TUser = {
     url: string;
   };
 };
+
+
+const userReDirect = (role: string, id: string): string => {
+  switch (role.toLocaleLowerCase()) {
+    case "organizer":
+      return `/admin/users/organizer?id=${id}`;
+    case "marchant":
+      return `/admin/users/marchent?id=${id}`;
+    case "kaatedj":
+      return `/admin/users/djskate?id=${id}`
+    default:
+      return "#"
+  }
+
+}
 
 const RecentlyUser = ({ data }: { data: any }) => {
   const [open, setOpen] = useState<boolean>(false);
@@ -81,23 +96,25 @@ const RecentlyUser = ({ data }: { data: any }) => {
       render: (text, record) => (
         <div className='flex items-center gap-2'>
           {
-            record.role === "ORGANIZER" ? (
-              <Link
-                href={`/admin/users/organizer`}
+            record.role === "USER" ?
+              <Eye
+                size={22}
+                color='#78C0A8'
+                onClick={() => { setOpen(true); setCurrentData(record) }}
                 className='cursor-pointer'
-              >
-                <Eye
-                  size={22}
-                  color='#78C0A8'
+              />
+              : (
+                <Link
+                  href={`${userReDirect(record?.role, record?._id)}`}
                   className='cursor-pointer'
-                />
-              </Link>
-            ) : <Eye
-              size={22}
-              color='#78C0A8'
-              onClick={() => { setOpen(true); setCurrentData(record) }}
-              className='cursor-pointer'
-            />
+                >
+                  <Eye
+                    size={22}
+                    color='#78C0A8'
+                    className='cursor-pointer'
+                  />
+                </Link>
+              )
           }
 
           <BlockUser id={record?._id} isActive={record?.isActive} />

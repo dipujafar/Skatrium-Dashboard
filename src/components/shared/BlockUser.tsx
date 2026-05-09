@@ -1,8 +1,6 @@
-"use client";
-
+"use client";;
 import { useBlockedUserMutation, useUnBlockedUserMutation } from '@/redux/api/userApi';
 import { message, Popconfirm, PopconfirmProps } from 'antd'
-import React from 'react'
 import { CgUnblock } from 'react-icons/cg'
 import { toast } from 'sonner';
 

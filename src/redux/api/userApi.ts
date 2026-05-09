@@ -31,16 +31,9 @@ const userApi = baseApi.injectEndpoints({
       providesTags: [tagTypes.user],
     }),
 
-    getOrganizerDetails: builder.query({
+    getUsersDetails: builder.query({
       query: (id) => ({
-        url: `/users/organizer-profile/${id}`,
-        method: "GET",
-      }),
-      providesTags: [tagTypes.user],
-    }),
-    getMarchantDetails: builder.query({
-      query: (id) => ({
-        url: `/users/marchant-profile/${id}`,
+        url: `/admin/users/${id}`,
         method: "GET",
       }),
       providesTags: [tagTypes.user],
@@ -90,6 +83,5 @@ export const {
   useBlockedUserMutation,
   useUnBlockedUserMutation,
   useGetUsersByRoleQuery,
-  useGetOrganizerDetailsQuery,
-  useGetMarchantDetailsQuery,
+  useGetUsersDetailsQuery
 } = userApi;

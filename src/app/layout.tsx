@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+// @ts-ignore
 import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { ConfigProvider } from "antd";
@@ -32,7 +33,7 @@ export default function RootLayout({
         <Providers>
           <AntdRegistry>
             <ConfigProvider theme={antTheme}>
-              <Toaster position='top-center' />
+              <Toaster richColors={true} position='top-center' />
               {children}
             </ConfigProvider>
           </AntdRegistry>

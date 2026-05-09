@@ -43,13 +43,13 @@ const subscriptionPlanSchema = z.object({
         .int("Price must be a whole number")
         .nonnegative("Price cannot be negative"),
     //   currency: z.string().default("usd"),
-    //   interval: z.enum(["month", "year"]).default("month"),
-    trialDays: z
-        .number({ invalid_type_error: "Trial days must be a number" })
-        .int("Trial days must be a whole number")
-        .min(0, "Trial days cannot be negative")
-        .max(365, "Trial days cannot exceed 365")
-        .default(30),
+    interval: z.enum(["month", "year"]).default("month"),
+    // trialDays: z
+    //     .number({ invalid_type_error: "Trial days must be a number" })
+    //     .int("Trial days must be a whole number")
+    //     .min(0, "Trial days cannot be negative")
+    //     .max(365, "Trial days cannot exceed 365")
+    //     .default(30),
     //   stripePriceId: z
     //     .string()
     //     .min(1, "Stripe price ID is required")
@@ -71,8 +71,8 @@ export default function SubscriptionPlanForm() {
         defaultValues: {
             // bio: "",
             //   currency: "usd",
-            //   interval: "month",
-            trialDays: 30,
+            interval: "month",
+            // trialDays: 30,
             //   features: [],
         },
     });
@@ -113,7 +113,7 @@ export default function SubscriptionPlanForm() {
     const onSubmit = async (values: SubscriptionPlanFormValues) => {
         try {
             await createSubs(values).unwrap();
-            toast.error("Successfully crate subscription");
+            toast.success("Successfully crate subscription");
         } catch (error: any) {
             toast.error(error?.data?.message || "Failed to create subscription");
         }
@@ -156,7 +156,7 @@ export default function SubscriptionPlanForm() {
                                                 defaultValue={field.value}
                                             >
                                                 <FormControl>
-                                                    <SelectTrigger className="py-5">
+                                                    <SelectTrigger className="py-5 bg-[#312e2e]">
                                                         <SelectValue placeholder="Select plan" />
                                                     </SelectTrigger>
                                                 </FormControl>
@@ -182,7 +182,7 @@ export default function SubscriptionPlanForm() {
                                                 defaultValue={field.value}
                                             >
                                                 <FormControl>
-                                                    <SelectTrigger className="py-5">
+                                                    <SelectTrigger className="py-5 bg-[#312e2e]">
                                                         <SelectValue placeholder="Select role" />
                                                     </SelectTrigger>
                                                 </FormControl>
@@ -209,7 +209,7 @@ export default function SubscriptionPlanForm() {
                                         <FormControl>
                                             <Textarea
                                                 placeholder="Write short description about the plan...."
-                                                className="resize-none h-24"
+                                                className="resize-none h-24 bg-[#312e2e]"
                                                 {...field}
 
                                             />
@@ -245,7 +245,7 @@ export default function SubscriptionPlanForm() {
                                                     <Input
                                                         type="number"
                                                         placeholder="Enter plan price"
-                                                        className="pl-7 py-5"
+                                                        className="pl-7 py-5 bg-[#312e2e]"
                                                         {...field}
                                                         onChange={(e) =>
                                                             field.onChange(
@@ -291,32 +291,32 @@ export default function SubscriptionPlanForm() {
                 /> */}
 
                                 {/* Interval */}
-                                {/* <FormField
-                  control={form.control}
-                  name="interval"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Billing interval</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="month">Monthly</SelectItem>
-                          <SelectItem value="year">Yearly</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                /> */}
-
                                 <FormField
+                                    control={form.control}
+                                    name="interval"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Duration</FormLabel>
+                                            <Select
+                                                onValueChange={field.onChange}
+                                                defaultValue={field.value}
+                                            >
+                                                <FormControl>
+                                                    <SelectTrigger className="bg-[#312e2e] py-5">
+                                                        <SelectValue />
+                                                    </SelectTrigger>
+                                                </FormControl>
+                                                <SelectContent>
+                                                    <SelectItem value="month">Monthly</SelectItem>
+                                                    <SelectItem value="year">Yearly</SelectItem>
+                                                </SelectContent>
+                                            </Select>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+
+                                {/* <FormField
                                     control={form.control}
                                     name="trialDays"
                                     render={({ field }) => (
@@ -341,7 +341,7 @@ export default function SubscriptionPlanForm() {
                                             <FormMessage />
                                         </FormItem>
                                     )}
-                                />
+                                /> */}
 
                             </div>
 

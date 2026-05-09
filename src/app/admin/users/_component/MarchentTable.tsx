@@ -96,7 +96,7 @@ const MarchentTable = () => {
             //align: "center",
             render: (text, record) => (
                 <div className='flex items-center gap-2'>
-                    <Link href={`/admin/users/organizer`}>
+                    <Link href={`/admin/users/marchent?id=${record?._id}`}>
                         <Eye
                             size={22}
                             color='#78C0A8'

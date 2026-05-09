@@ -15,7 +15,7 @@ const DashboardPage = () => {
   queries.limit = 5;
   const { data, isLoading } = useGetDashboardPageDataQuery(queries);
 
-  if (isLoading) return <div className="flex justify-center items-center min-h-[calc(100vh-150px)]"><Spin /></div>
+  if (isLoading) return <div className="flex justify-center items-center min-h-[calc(100vh-150px)]"><Spin size="large" /></div>
 
   return (
     <div className="lg:space-y-5 space-y-3 ">

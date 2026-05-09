@@ -1,13 +1,12 @@
 "use client";;
-import { Button, ConfigProvider, Form, Input } from "antd";
+import { Button, ConfigProvider, Form, Input, Spin } from "antd";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { FaArrowLeft } from "react-icons/fa6";
 import { FiEdit } from "react-icons/fi";
 import profile from "@/assets/image/adminProfile.png";
 import { useState } from "react";
 import { Camera, Trash2 } from "lucide-react";
-import { useGetMyProfileQuery } from "@/redux/api/profileApi";
+import { useGetMyProfileQuery, useUpdateAdminProfileMutation } from "@/redux/api/profileApi";
+import { toast } from "sonner";
 
 const PersonalInformationContainer = () => {
   const [form] = Form.useForm();
@@ -15,19 +14,41 @@ const PersonalInformationContainer = () => {
   const [fileName, setFileName] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
-  const { data } = useGetMyProfileQuery(undefined);
+  const { data, isLoading } = useGetMyProfileQuery(undefined);
+  const [updateProfile, { isLoading: isUpdateProfileLoading }] = useUpdateAdminProfileMutation();
 
-  console.log(data);
+
 
 
   const handleProfileUpdate = async (values: {
-    contact?: string;
-    email?: string;
-    first_name?: string;
-    last_name?: string;
+    phoneNumber: string;
+    email: string;
+    name: string
   }) => {
-    console.log("")
-  };
+    {
+      try {
+        const formData = new FormData();
+
+        formData.append("fullName", values.name);
+        formData.append("phoneNumber", values.phoneNumber);
+
+        if (fileName) {
+          formData.append("image", fileName);
+        }
+
+        const res = await updateProfile(formData).unwrap();
+        console.log(res);
+
+        toast.success("Successfully Change personal information", {
+          duration: 1000,
+        });
+
+        setEdit(false);
+      } catch (error: any) {
+        toast.error(error?.data?.message || "Fail to update Profile");
+      }
+    }
+  }
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.target;
@@ -46,6 +67,14 @@ const PersonalInformationContainer = () => {
 
     input.value = "";
   };
+
+
+  if (isLoading) {
+    return <div className="h-[calc(100vh-200px)] flex justify-center items-center">
+      <Spin size="large" />
+    </div>
+  }
+
 
 
   return (
@@ -114,11 +143,11 @@ const PersonalInformationContainer = () => {
                 accept='image/*'
               />
               {/* upload button */}
-              <label htmlFor='fileInput' className='flex cursor-pointer flex-col items-center'>
+              {edit && <label htmlFor='fileInput' className='flex cursor-pointer flex-col items-center'>
                 <div className='bg-white text-black text-lg p-1 rounded-full  absolute bottom-0 right-3'>
                   <Camera size={20} />
                 </div>
-              </label>
+              </label>}
             </div>
             <h3 className='text-2xl text-center'>{"Alex Jr."}</h3>
           </div>
@@ -148,9 +177,9 @@ const PersonalInformationContainer = () => {
               }}
               key={"1"}
               initialValues={{
-                name: "Alex Jr.",
-                email: "alex.jr@com",
-                phoneNumber: "+1 123 456 7890",
+                name: data?.data?.fullName,
+                email: data?.data?.email,
+                phoneNumber: data?.data?.phoneNumber,
               }}
             >
               {/*  input  name */}
@@ -187,9 +216,11 @@ const PersonalInformationContainer = () => {
                   className='w-full hover:!bg-[#FCB806]/90 hover:!text-white'
                   block
                   style={{ border: "none" }}
+                  loading={isUpdateProfileLoading}
+                  disabled={isUpdateProfileLoading}
                   onClick={() => setEdit(false)}
                 >
-                  Save Change
+                  Save Change {isUpdateProfileLoading && <Spin />}
                 </Button>
               </div>
             </Form>

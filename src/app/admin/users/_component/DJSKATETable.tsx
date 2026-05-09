@@ -90,9 +90,9 @@ const DJSKATETable = () => {
             title: "Action",
             dataIndex: "action",
             //align: "center",
-            render: (text, record) => (
+            render: (_, record) => (
                 <div className='flex items-center gap-2'>
-                    <Link href={`/admin/users/organizer`}>
+                    <Link href={`/admin/users/djskate?id=${record?._id}`}>
                         <Eye
                             size={22}
                             color='#78C0A8'
