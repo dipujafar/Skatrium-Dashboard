@@ -1,10 +1,13 @@
 "use client";;
-import { Modal } from "antd";
+import { Modal, Spin } from "antd";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useCreateProductCategoryMutation, useDeleteProductCategoryMutation } from "@/redux/api/productCategoryApi";
+import { toast } from "sonner";
+import { getActualError } from "@/utils/handleError";
 
 type TPropsType = {
     open: boolean;
@@ -13,7 +16,7 @@ type TPropsType = {
 
 
 export const categoryFormSchema = z.object({
-    name: z.string().min(1, "Category name is required").min(2, "Category name must be at least 2 characters"),
+    name: z.string({ message: "Category name is required" }).min(1, "Category name is required"),
 });
 
 export type CategoryFormData = z.infer<typeof categoryFormSchema>;
@@ -21,6 +24,8 @@ export type CategoryFormData = z.infer<typeof categoryFormSchema>;
 
 
 const AddCategory = ({ open, setOpen }: TPropsType) => {
+    const [createProductCategory, { isLoading }] = useCreateProductCategoryMutation();
+
 
     const form = useForm<CategoryFormData>({
         // @ts-ignore
@@ -33,20 +38,16 @@ const AddCategory = ({ open, setOpen }: TPropsType) => {
             console.log("Form data:", {
                 name: data.name,
             });
-
-            // Here you would typically send the data to your API
-            // const formData = new FormData();
-            // formData.append("name", data.name);
-            // formData.append("image", data.image);
-            // await fetch("/api/categories", { method: "POST", body: formData });
-
-            // alert("Category saved successfully!");
+            const formattedData = {
+                name: data?.name
+            }
+            await createProductCategory(formattedData).unwrap();
+            toast.success("Successfully created product category")
             form.reset();
-
-        } catch (error) {
-            console.error("Error saving category:", error);
-        } finally {
             setOpen(false);
+        } catch (error: any) {
+            const errMessage = getActualError(error);
+            toast.error(errMessage || "Failed")
         }
     };
 
@@ -87,8 +88,9 @@ const AddCategory = ({ open, setOpen }: TPropsType) => {
                         <button
                             type="submit"
                             className="bg-main-color text-white px-4 py-2 rounded-md w-full"
+                            disabled={isLoading}
                         >
-                            Save
+                            Save {isLoading && <Spin />}
                         </button>
                     </div>
                 </form>

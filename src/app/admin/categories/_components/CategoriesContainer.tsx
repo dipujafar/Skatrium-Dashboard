@@ -1,5 +1,5 @@
 "use client"
-import { Button, Input } from 'antd'
+import { Button } from 'antd'
 import { Plus } from 'lucide-react'
 import React from 'react'
 import { AllCategories } from './AllCategories'
@@ -10,9 +10,8 @@ export default function CategoriesContainer() {
     return (
         <div>
             <div className='flex justify-between items-center mb-5'>
-                <Input.Search placeholder="Search Category" size='large' className='max-w-[400px]' />
-
-                <Button onClick={() => setOpen(true)} type="primary" size='large' icon={<Plus />} className='bg-gradient-to-t from-[#E6CA6E] to-[#775806]'>Add Category</Button>
+                <div></div>
+                <Button onClick={() => setOpen(true)} type="primary" icon={<Plus size={18}/>} className='bg-gradient-to-t from-[#E6CA6E] to-[#775806]'>Add Product Category</Button>
 
             </div>
             <AllCategories />

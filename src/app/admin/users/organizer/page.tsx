@@ -1,11 +1,9 @@
-"use client"
-import type React from "react"
-import { useState } from "react"
+"use client";
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import DownloadFile from "./_components/DownloadFile"
-import { IoLogoInstagram } from "react-icons/io5";
 import { SlGlobe } from "react-icons/sl";
-import { FaFacebook, FaInstagram, FaLink, FaLinkedin, FaTiktok, FaTwitter, FaYoutube } from "react-icons/fa6";
+import { FaLink } from "react-icons/fa6";
 import Link from "next/link"
 import { Image, Spin } from "antd"
 import { useSearchParams } from "next/navigation"
@@ -18,6 +16,7 @@ import { LiaExternalLinkAltSolid } from "react-icons/lia";
 export default function OrganizerPage() {
     const id = useSearchParams().get("id");
     const { data, isLoading } = useGetUsersDetailsQuery(id, { skip: !id });
+    const [address, setAddress] = useState("")
 
     const userData = data?.data;
 
@@ -38,13 +37,37 @@ export default function OrganizerPage() {
         previousEventsLink: "iijSjhUwQsL6HwAdWwl/ gudoslib-%7C%",
     });
 
-    console.log(userData);
+
+
+    console.log(userData?.location?.coordinates);
     console.log(userData?.socialLink?.website);
 
 
-    if (!isLoading) {
-        <div className="h-[calc(100vh-200px)] flex justify-center items-center"><Spin /></div>
-    }
+
+
+    useEffect(() => {
+        const lat = userData?.location?.coordinates?.[1];
+        const lon = userData?.location?.coordinates?.[0];
+
+        // Guard: skip if coordinates are missing or not valid numbers
+        if (!lat || !lon || isNaN(Number(lat)) || isNaN(Number(lon))) return;
+
+        const getAddress = async () => {
+            try {
+                const res = await fetch(
+                    `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`,
+                    { headers: { "User-Agent": "YourAppName" } },
+                );
+                const data = await res.json();
+                setAddress(data?.display_name)
+            } catch (err) {
+                console.error("Reverse geocode failed:", err);
+            }
+        };
+
+        getAddress();
+    }, [userData?.location?.coordinates]);
+
 
     const handleCancel = () => {
         alert("Form cancelled")
@@ -54,6 +77,10 @@ export default function OrganizerPage() {
         alert("Form approved!")
     }
 
+
+    if (!isLoading) {
+        <div className="h-[calc(100vh-200px)] flex justify-center items-center"><Spin /></div>
+    }
 
 
     return (
@@ -89,7 +116,7 @@ export default function OrganizerPage() {
                     </div>
                     <div>
                         <label className="text-lg text-[#DCF3FF]  font-medium block mb-1">Location</label>
-                        <p className="text-[#DCF3FF] ">{formData.location}</p>
+                        <p className="text-[#DCF3FF] ">{address || "N/A"}</p>
                     </div>
                 </div>
 
@@ -98,6 +125,10 @@ export default function OrganizerPage() {
                     <div>
                         <Link href={userData?.socialLink?.shoplink || "#"} className="flex gap-x-2"> <label className="text-lg text-[#DCF3FF]  font-medium block mb-1">Shop Name</label> {userData?.socialLink?.shoplink && <LiaExternalLinkAltSolid color="#DCF3FF" />} </Link>
                         <Link href={userData?.socialLink?.shoplink || "#"} className="text-[#DCF3FF] ">{userData?.socialLink?.shopName}</Link>
+                    </div>
+                    <div>
+                        <label className="text-lg text-[#DCF3FF]  font-medium block mb-1">Shop type</label>
+                        <p className="text-[#DCF3FF] ">{userData?.socialLink?.shoptype}</p>
                     </div>
                     <div>
                         <label className="text-lg text-[#DCF3FF]  font-medium block mb-1">Social Media</label>
@@ -115,6 +146,10 @@ export default function OrganizerPage() {
                     <div>
                         <label className="text-lg text-[#DCF3FF]  font-medium block mb-1">How did you hear about Skatrium?</label>
                         <p className="text-[#DCF3FF] ">{userData?.howDidYouHear}</p>
+                    </div>
+                    <div>
+                        <label className="text-lg text-[#DCF3FF]  font-medium block mb-1">Role</label>
+                        <p className="text-[#DCF3FF] ">{userData?.role}</p>
                     </div>
                 </div>
             </div>

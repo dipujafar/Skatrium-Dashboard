@@ -47,15 +47,15 @@ export const navLinks = [
     icon: <Megaphone size={18} />,
     label: <Link href={"/admin/events"}>Events</Link>,
   },
-  {
-    key: "country_management",
-    icon: <Globe size={18} />,
-    label: <Link href={"/admin/country-management"}>Country Management</Link>,
-  },
+  // {
+  //   key: "country_management",
+  //   icon: <Globe size={18} />,
+  //   label: <Link href={"/admin/country-management"}>Country Management</Link>,
+  // },
   {
     key: "product_categories",
     icon: <SquareStack size={18} />,
-    label: <Link href={"/admin/categories"}>Product Categories</Link>,
+    label: <Link href={"/admin/categories"}>Categories</Link>,
   },
   {
     key: "subscription",
