@@ -11,7 +11,8 @@ export const tagTypes = {
   subscription: "subscription",
   profile: "profile",
   productCategory: "productCategory",
-  eventCategory: "eventCategory"
+  eventCategory: "eventCategory",
+  event: "event",
 };
 
 export const tagTypesList = [
@@ -27,5 +28,6 @@ export const tagTypesList = [
   tagTypes.subscription,
   tagTypes.profile,
   tagTypes.productCategory,
-  tagTypes.eventCategory
+  tagTypes.eventCategory,
+  tagTypes.event,
 ];
