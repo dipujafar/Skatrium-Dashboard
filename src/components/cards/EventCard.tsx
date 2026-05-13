@@ -20,8 +20,6 @@ export default function EventCard({ event }: { event: Event }) {
                         : <div className='bg-[#211604] rounded !size-[60px] flex items-center justify-center'>
                         <p className='text-[#F6F6F6]  text-lg'>{event?.title?.charAt(0)}</p>
                         </div>
-
-
                     }
                     <div className='flex flex-col justify-between'>
                         <h5 className='text-[#F6F6F6] lg:text-lg  font-semibold'>{event?.title}</h5>
@@ -30,7 +28,7 @@ export default function EventCard({ event }: { event: Event }) {
                 </div>
                 <Button onClick={() => setOpen(true)} size={"sm"} className='bg-[#211604] rounded-full border border-[#FFFFFF33]/[0.2]'>View Details</Button>
             </div>
-            <EarningDetailsModal open={open} setOpen={setOpen} />
+            <EarningDetailsModal open={open} setOpen={setOpen} event={event} />
         </div>
     )
 }

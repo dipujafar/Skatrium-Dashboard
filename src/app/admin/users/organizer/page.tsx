@@ -16,7 +16,7 @@ import { LiaExternalLinkAltSolid } from "react-icons/lia";
 export default function OrganizerPage() {
     const id = useSearchParams().get("id");
     const { data, isLoading } = useGetUsersDetailsQuery(id, { skip: !id });
-    const [address, setAddress] = useState("")
+    const [address, setAddress] = useState("");
 
     const userData = data?.data;
 
@@ -37,10 +37,6 @@ export default function OrganizerPage() {
         previousEventsLink: "iijSjhUwQsL6HwAdWwl/ gudoslib-%7C%",
     });
 
-
-
-    console.log(userData?.location?.coordinates);
-    console.log(userData?.socialLink?.website);
 
 
 

@@ -1,8 +1,11 @@
 "use client"
 import EventCard from '@/components/cards/EventCard'
+import EmptyData from '@/components/shared/EmptyData'
 import PaginationSection from '@/components/shared/PaginationSection'
+import { cn } from '@/lib/utils'
 import { useGetAllEventDataQuery } from '@/redux/api/eventApi'
 import { Event } from '@/types'
+import { Spin } from 'antd'
 import { useSearchParams } from 'next/navigation'
 import React from 'react'
 
@@ -14,8 +17,16 @@ export default function EventsContainer() {
     const queries: Record<string, string> = {};
     if (page) queries["page"] = page;
     if (limit) queries["limit"] = limit;
-    const { data } = useGetAllEventDataQuery(queries);
-    console.log(data?.data?.pagination);
+    const { data, isLoading } = useGetAllEventDataQuery(queries);
+
+    if (isLoading) {
+        return <div className={cn('h-[calc(100vh-200px)] flex items-center justify-center')}><Spin size='large' /></div>
+    }
+
+    if (!data?.data?.events?.length) {
+        return <EmptyData message='No event found' />
+    }
+
     return (
         <div className='xl:col-span-2 border border-[#FFFFFF33]/[0.2]  rounded-2xl p-4'>
             <div className='flex items-center gap-x-2 mb-3'>
@@ -28,7 +39,8 @@ export default function EventsContainer() {
                     ))
                 }
             </div>
-            <PaginationSection total={30} current={1} pageSize={10} />
+            <PaginationSection total={data?.data?.pagination?.total} current={Number(page)} pageSize={Number(limit)} />
         </div>
     )
 }
+

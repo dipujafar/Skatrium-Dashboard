@@ -1,4 +1,4 @@
-"use client";
+"use client";;
 import {
   Menubar,
   MenubarContent,
@@ -10,16 +10,15 @@ import {
 } from "@/components/ui/menubar";
 import useGreeting from "@/hooks/useGreeting";
 import { cn } from "@/lib/utils";
-import { useGetProfileQuery } from "@/redux/api/userApi";
+import { useGetMyProfileQuery } from "@/redux/api/profileApi";
 import { logout } from "@/redux/features/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { TUser } from "@/types";
-import { Avatar, Badge, Flex } from "antd";
+import { Avatar, Flex, Image } from "antd";
 import { ChevronRight, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FaBars } from "react-icons/fa6";
-import { IoNotificationsOutline } from "react-icons/io5";
 
 type TNavbarProps = {
   collapsed: boolean;
@@ -29,11 +28,12 @@ type TNavbarProps = {
 const Navbar = ({ collapsed, setCollapsed }: TNavbarProps) => {
   const greeting = useGreeting();
 
-  const { data, isLoading } = useGetProfileQuery([]);
+  const { data, isLoading } = useGetMyProfileQuery([]);
   const user = data?.data as TUser;
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const notificationCount = user?._count?.notifications || 0;
+
+  console.log(data?.data?.image?.url)
 
   return (
     <div className='flex items-center justify-between w-[97%] font-poppins text-text-color xl:px-8 px-4'>
@@ -89,11 +89,14 @@ const Navbar = ({ collapsed, setCollapsed }: TNavbarProps) => {
           <MenubarMenu>
             <MenubarTrigger className='shadow-none px-0 bg-[#111827] data-[state=open]:bg-[#111827] active:bg-[#111827]'>
               <div className={cn("text-black flex items-center gap-x-1 cursor-pointer")}>
-                <Avatar
-                  src={"/user_image.jpg"}
-                  size={40}
-                  className='border border-main-color size-16'
-                ></Avatar>
+                <Image
+                  src={data?.data?.image?.url}
+                  height={40}
+                  width={40}
+                  className='border border-main-color size-16 !rounded-full'
+                  fallback={`data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='34' height='34'><circle cx='17' cy='17' r='17' fill='%2300BFA5'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-size='14' font-weight='600' fill='white'>${data?.data?.fullName?.charAt(0)}</text></svg>`}
+                  preview={false}
+                ></Image>
                 <h4
                   className={cn(
                     "text-base font-medium truncate flex-1 text-white",

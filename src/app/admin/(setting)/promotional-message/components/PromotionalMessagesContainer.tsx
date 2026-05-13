@@ -120,7 +120,6 @@ const PromotionalMessagesContainer = () => {
       });
       setEmailInput("");
     } catch (error: any) {
-      console.log(error);
       Error_Modal({ title: error?.data?.message });
     }
   };

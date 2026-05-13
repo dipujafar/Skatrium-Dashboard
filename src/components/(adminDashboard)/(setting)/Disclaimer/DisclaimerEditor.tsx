@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 // import { FaArrowLeft } from "react-icons/fa6";
+// @ts-ignore
 import "react-quill/dist/quill.snow.css";
 
 // Dynamically import ReactQuill with SSR disabled
@@ -40,7 +41,6 @@ const DisclaimerEditor = () => {
 
       Success_model({ title: "Settings updated successfully" });
     } catch (error: any) {
-      console.log(error);
       Error_Modal({ title: error?.data?.message });
     }
   };

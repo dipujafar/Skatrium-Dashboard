@@ -2,8 +2,7 @@
 import PaginationSection from "@/components/shared/PaginationSection";
 import { EventData } from "./ProfileReportCard";
 import EventReportCard from "./EventReportCard";
-
-
+import { useGetAllEventReportQuery } from "@/redux/api/eventReportsApi";
 
 const eventsData: EventData[] = [
     {
@@ -128,6 +127,10 @@ const eventsData: EventData[] = [
 ];
 
 const EventReportContainer = () => {
+    const queries: Record<string, string> = {};
+    const { data } = useGetAllEventReportQuery(queries);
+
+    console.log(data?.data?.reports);
     const handleViewDetails = (id: string) => {
         console.log("View details for event:", id);
     };
@@ -141,9 +144,9 @@ const EventReportContainer = () => {
             <h4 className="text-[#93A4B0] text-xl font-semibold mb-4">All Reports </h4>
             <div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center">
-                    {eventsData.map((event) => (
+                    {data?.data?.reports?.map((event:any) => (
                         <EventReportCard
-                            key={event.id}
+                            key={event?._id}
                             event={event}
                             onViewDetails={handleViewDetails}
                             onRemove={handleRemove}

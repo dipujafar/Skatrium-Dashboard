@@ -37,7 +37,6 @@ const PersonalInformationContainer = () => {
         }
 
         const res = await updateProfile(formData).unwrap();
-        console.log(res);
 
         toast.success("Successfully Change personal information", {
           duration: 1000,
@@ -54,7 +53,6 @@ const PersonalInformationContainer = () => {
     const input = event.target;
 
     const file = input.files?.[0];
-    console.log(file);
 
     if (file) {
       const url = URL.createObjectURL(file);

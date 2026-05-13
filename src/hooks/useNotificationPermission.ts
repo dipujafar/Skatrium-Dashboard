@@ -15,7 +15,7 @@ export const useNotificationPermission = () => {
           const token = await getToken(messaging, {
             vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY!,
           });
-          console.log("Notification token:", token);
+          // console.log("Notification token:", token);
         } catch (error) {
           console.error("Failed to retrieve token:", error);
         }
