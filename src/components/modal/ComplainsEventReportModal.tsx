@@ -1,15 +1,23 @@
 import { Image, Modal } from "antd";
 import { MapPin, Clock, AlertCircle } from "lucide-react";
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/components/ui/badge";
 import { Button } from "../ui/button";
+import moment from "moment";
 
 type TPropsType = {
     open: boolean;
     setOpen: (collapsed: boolean) => void;
+    event: any;
+    address: string;
+    onRemove: () => void;
+    isDeleting: boolean;
 };
 
+const ComplainsEventReportModal = ({ open, setOpen, event, address, onRemove, isDeleting }: TPropsType) => {
+    const eventData = event?.event || {};
+    const reportedBy = event?.reportedBy || {};
+    const reviewImages: { url: string; _id: string }[] = event?.review?.images || [];
 
-const ComplainsEventReportModal = ({ open, setOpen }: TPropsType) => {
     return (
         <Modal
             open={open}
@@ -24,48 +32,83 @@ const ComplainsEventReportModal = ({ open, setOpen }: TPropsType) => {
         >
             <div className="max-w-xl">
 
-             <div className="flex items-center gap-x-2 mb-2">
-                <Image src="/user_image.jpg" className="!w-14 !h-14 object-cover rounded-full"></Image>
-                <h1 className="text-lg font-semibold">Jack Robo</h1>
-             </div>
+                <div className="flex items-center gap-x-2 mb-2">
+                    <Image
+                        src={reportedBy?.image?.url}
+                        height={40}
+                        width={40}
+                        className='border border-main-color size-16 !rounded-full'
+                        fallback={`data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='34' height='34'><circle cx='17' cy='17' r='17' fill='%2300BFA5'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-size='14' font-weight='600' fill='white'>${reportedBy?.fullName?.charAt(0)}</text></svg>`}
+                        preview={false}
+                    />
+                    <div>
+                        <h1 className="text-lg font-semibold">{reportedBy?.fullName}</h1>
+                        <p className="text-xs">{reportedBy?.email}</p>
+                    </div>
+                </div>
+
                 <div>
                     {/* Header Image */}
                     <div className="relative overflow-hidden rounded-t-2xl max-h-[300px]">
-                        <Image src="/event_image_2.png" alt="Sunset Skate Session" className="h-full w-full object-cover" />
+                        <Image src={eventData?.coverImage?.url || "/default_banner_image.png"} alt="event image" className="h-full w-full object-contain" />
 
                         {/* Content Container */}
-                        <div className=" rounded-b-2xl pt-3 absolute bottom-0 left-2">
-                            {/* price */}
-                            <p className="bg-[#FA9416] w-fit  px-2 rounded-full font-medium mb-2">
-                                $20
+                        <div className="rounded-b-2xl pt-3 absolute bottom-0 left-2">
+                            <p className="bg-[#FA9416] w-fit px-2 rounded-full font-medium mb-2">
+                                ${eventData?.price}
                             </p>
-                            {/* Title */}
-                            <h1 className="text-xl md:text-2xl font-bold text-white mb-2">Sunset Skate Session</h1>
+                            <h1 className="text-xl md:text-2xl font-bold text-white mb-2">{eventData?.title}</h1>
 
-                            {/* Location Tags */}
                             <div className="flex flex-wrap gap-2 mb-2">
                                 <Badge variant="outline" className="bg-zinc-700 border-zinc-600 text-white hover:bg-zinc-600">
                                     <Clock className="w-4 h-4 mr-2" />
-                                    12 Dec, 10 AM
+                                    {moment(eventData?.date).format("DD MMM")}, {eventData?.time}
                                 </Badge>
-                                <Badge variant="outline" className="bg-zinc-700 border-zinc-600 text-white hover:bg-zinc-600">
-                                    <MapPin className="w-4 h-4 mr-2" />
-                                    Los Angeles, CA
+                                <Badge variant="outline" className="bg-zinc-700 border-zinc-600 text-white hover:bg-zinc-600 items-start">
+                                    <MapPin className="mr-2" />
+                                    {address}
                                 </Badge>
                             </div>
                         </div>
                     </div>
 
-                    {/* About This Event */}
+                    {/* Reason For Report */}
                     <section className="mt-3">
                         <h2 className="text-xl font-semibold text-white mb-2">Reason For report</h2>
-                        <div className="bg-[#580505] p-2 border border-red-300 flex gap-x-2 items-center rounded-xl">
-                            <div className="bg-[#8B0505] p-1 rounded-md"><AlertCircle /></div>
-                            <p>Just to let you know this might be a problem</p>
+                        <div className="bg-[#580505] p-2 border border-red-300 flex gap-x-2 items-start rounded-xl">
+                            <div className="bg-[#8B0505] p-1 rounded-md flex-shrink-0">
+                                <AlertCircle size={18} />
+                            </div>
+                            <div className="flex-1">
+                                <p>{event?.reason}</p>
+
+                                {reportedBy?.image?.url  && (
+                                    <div className="flex items-center gap-2 mt-2 flex-wrap">
+                                        <Image.PreviewGroup>
+                                            <Image
+                                                key={"image"}
+                                                src={reportedBy?.image?.url}
+                                                width={56}
+                                                height={56}
+                                                className="!rounded-lg object-cover cursor-pointer"
+                                                style={{ borderRadius: 8 }}
+                                            />
+
+                                        </Image.PreviewGroup>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </section>
-                    {/* remove button */}
-                    <Button className="w-full mt-4 bg-[#FF4848] hover:bg-slate-700">Remove Post</Button>
+
+                    {/* Remove button */}
+                    <Button
+                        className="w-full mt-4 bg-[#FF4848] hover:bg-slate-700 disabled:opacity-50"
+                        disabled={isDeleting}
+                        onClick={onRemove}
+                    >
+                        {isDeleting ? "Removing..." : "Remove Post"}
+                    </Button>
                 </div>
             </div>
         </Modal>

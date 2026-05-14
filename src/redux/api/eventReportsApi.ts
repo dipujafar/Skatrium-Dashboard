@@ -1,3 +1,4 @@
+import { tagTypes } from "../tagTypes";
 import { baseApi } from "./baseApi";
 
 const eventReportsApi = baseApi.injectEndpoints({
@@ -8,8 +9,17 @@ const eventReportsApi = baseApi.injectEndpoints({
         method: "GET",
         params,
       }),
+      providesTags: [tagTypes.eventReport]
+    }),
+    deleteEventReport: builder.mutation({
+      query: (id) => ({
+        url: `/eventreport/admin/reports/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags:[tagTypes.eventReport]
     }),
   }),
 });
 
-export const { useGetAllEventReportQuery } = eventReportsApi;
+export const { useGetAllEventReportQuery, useDeleteEventReportMutation } =
+  eventReportsApi;

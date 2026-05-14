@@ -13,6 +13,8 @@ export const tagTypes = {
   productCategory: "productCategory",
   eventCategory: "eventCategory",
   event: "event",
+  eventReport: "eventReport",
+  productReport: "productReport"
 };
 
 export const tagTypesList = [
@@ -30,4 +32,6 @@ export const tagTypesList = [
   tagTypes.productCategory,
   tagTypes.eventCategory,
   tagTypes.event,
+  tagTypes.eventReport,
+  tagTypes.productReport
 ];

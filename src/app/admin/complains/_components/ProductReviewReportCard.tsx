@@ -46,7 +46,6 @@ const ProductReviewReportCard = ({ event, onViewDetails, onRemove }: ProfileRepo
         <>
             <div className="bg-white/10 rounded-xl overflow-hidden w-full max-w-sm border border-white/20 shadow-xl text-white">
 
-
                 {/* Event Details */}
                 <div className="p-4 space-y-3">
 
