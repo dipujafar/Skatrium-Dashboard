@@ -1,9 +1,11 @@
+"use client"
 import React from 'react'
 import { Tabs } from 'antd';
 import { TabsProps } from 'antd/lib';
 import EventReportContainer from './_components/EventReportContainer';
 import ProfileReportContainer from './_components/ProfileReportContainer';
 import ProductReviewReportContainer from './_components/ProductReviewReportContainer';
+import { useUpdateSearchParams } from '@/hooks/useUpdateSearchParams';
 
 const items: TabsProps['items'] = [
     {
@@ -23,6 +25,13 @@ const items: TabsProps['items'] = [
     }
 ];
 
+
+
 export default function ComplainsPage() {
-    return <Tabs defaultActiveKey="1" items={items} />
+    const updateParams = useUpdateSearchParams();
+    const onChange = () => {
+        updateParams({ page: '1' });
+    };
+
+    return <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
 }

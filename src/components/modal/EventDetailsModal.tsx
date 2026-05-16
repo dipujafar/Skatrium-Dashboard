@@ -10,12 +10,6 @@ type TPropsType = {
     event: any
 };
 
-const eventImage = [
-    "/event_image_3.png",
-    "/event_image_4.png",
-    "/event_image_5.png",
-    "/event_image_6.png"
-]
 
 const EarningDetailsModal = ({ open, setOpen, event }: TPropsType) => {
     const [address, setAddress] = useState();

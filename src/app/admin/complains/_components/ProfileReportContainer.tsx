@@ -1,155 +1,38 @@
 "use client";
 import PaginationSection from "@/components/shared/PaginationSection";
 import ProfileReportCard from "./ProfileReportCard";
-
-
-const profileReports = [
-    {
-        id: "1",
-        title: "Sunset Skate Session",
-        image: "/event_image_2.png",
-        price: 20.5,
-        date: "12 Dec, 10 AM",
-        location: "Los Angeles, CA",
-        review: {
-            userName: "Jack Robo",
-            userAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Jack",
-            rating: 5.0,
-            comment:
-                "Good event overall but the food options were limited and overpriced. The music was great though!",
-        },
-    },
-    {
-        id: "2",
-        title: "Summer Music Festival",
-        image: "/event_image_2.png",
-        price: 75.0,
-        date: "25 Jan, 6 PM",
-        location: "Miami, FL",
-        review: {
-            userName: "Sarah Chen",
-            userAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah",
-            rating: 4.5,
-            comment:
-                "Amazing lineup and great vibes! The venue was well organized and security was very professional.",
-        },
-    },
-    {
-        id: "3",
-        title: "Holiday Ice Carnival",
-        image: "/event_image_2.png",
-        price: 35.0,
-        date: "20 Dec, 2 PM",
-        location: "New York, NY",
-        review: {
-            userName: "Mike Johnson",
-            userAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Mike",
-            rating: 4.8,
-            comment:
-                "Perfect for families! Kids loved the decorations and the hot chocolate stand was a nice touch.",
-        },
-    },
-    {
-        id: "4",
-        title: "Urban Dance Party",
-        image: "/event_image_2.png",
-        price: 50.0,
-        date: "15 Feb, 8 PM",
-        location: "San Francisco, CA",
-        review: {
-            userName: "Emily Davis",
-            userAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Emily",
-            rating: 4.6,
-            comment:
-                "The dance floor was huge and the DJs were top-notch. The atmosphere was lively and fun.",
-        },
-    },
-    {
-        id: "5",
-        title: "Summer Music Festival",
-        image: "/event_image_2.png",
-        price: 75.0,
-        date: "25 Jan, 6 PM",
-        location: "Miami, FL",
-        review: {
-            userName: "Sarah Chen",
-            userAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah",
-            rating: 4.5,
-            comment:
-                "Amazing lineup and great vibes! The venue was well organized and security was very professional.",
-        },
-    },
-    {
-        id: "6",
-        title: "Holiday Ice Carnival",
-        image: "/event_image_2.png",
-        price: 35.0,
-        date: "20 Dec, 2 PM",
-        location: "New York, NY",
-        review: {
-            userName: "Mike Johnson",
-            userAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Mike",
-            rating: 4.8,
-            comment:
-                "Perfect for families! Kids loved the decorations and the hot chocolate stand was a nice touch.",
-        },
-    },
-    {
-        id: "7",
-        title: "Urban Dance Party",
-        image: "/event_image_2.png",
-        price: 50.0,
-        date: "15 Feb, 8 PM",
-        location: "San Francisco, CA",
-        review: {
-            userName: "Emily Davis",
-            userAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Emily",
-            rating: 4.6,
-            comment:
-                "The dance floor was huge and the DJs were top-notch. The atmosphere was lively and fun.",
-        },
-    }, {
-        id: "8",
-        title: "Urban Dance Party",
-        image: "/event_image_2.png",
-        price: 50.0,
-        date: "15 Feb, 8 PM",
-        location: "San Francisco, CA",
-        review: {
-            userName: "Emily Davis",
-            userAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Emily",
-            rating: 4.6,
-            comment:
-                "The dance floor was huge and the DJs were top-notch. The atmosphere was lively and fun.",
-        },
-    }
-];
+import { useGetAllProfileReportsQuery } from "@/redux/api/profileReportApi";
+import { useSearchParams } from "next/navigation";
+import EmptyData from "@/components/shared/EmptyData";
+import { Spin } from "antd";
 
 const ProfileReportContainer = () => {
-    const handleViewDetails = (id: string) => {
-        console.log("View details for event:", id);
-    };
+    const page = useSearchParams().get("page")
+    const pageSize = 12;
 
-    const handleRemove = (id: string) => {
-        console.log("Remove event:", id);
-    };
+    const { data, isLoading } = useGetAllProfileReportsQuery({ page, limit: pageSize });
+
+    const reports = data?.data?.reports || [];
+    const total = data?.data?.pagination?.total || 0;
+
+    if (isLoading) return <div className="flex justify-center items-center min-h-[calc(100vh-250px)]"><Spin size="large" /></div>
 
     return (
         <div className="border border-[#FFFFFF33]/[0.2] rounded-2xl py-5 px-4">
-            <h4 className="text-[#93A4B0] text-xl font-semibold mb-4">All Reports </h4>
-            <div>
+            <h4 className="text-[#93A4B0] text-xl font-semibold mb-4">All Profile Reports</h4>
+            {total === 0 && <div>  <EmptyData message="No reports " /> </div>}
+            {total > 0 && <div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center">
-                    {profileReports.map((event) => (
-                        <ProfileReportCard
-                            key={event.id}
-                            event={event}
-                            onViewDetails={handleViewDetails}
-                            onRemove={handleRemove}
-                        />
+                    {reports.map((report: any) => (
+                        <ProfileReportCard key={report?._id} report={report} />
                     ))}
                 </div>
-            </div>
-            <PaginationSection total={30} current={1} pageSize={10} />
+            </div>}
+            <PaginationSection
+                total={total}
+                current={Number(page)}
+                pageSize={pageSize}
+            />
         </div>
     );
 };

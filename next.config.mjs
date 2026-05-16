@@ -22,7 +22,7 @@ const nextConfig = {
   images: {
     domains: [
       "i.ibb.co.com",
-      "clinica-admin.s3.eu-north-1.amazonaws.com",
+      "my-planeer-s3.s3.us-east-1.amazonaws.com",
       "lh3.googleusercontent.com",
     ],
   },

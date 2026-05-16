@@ -14,7 +14,9 @@ export const tagTypes = {
   eventCategory: "eventCategory",
   event: "event",
   eventReport: "eventReport",
-  productReport: "productReport"
+  productReport: "productReport",
+  profileReport: "profileReport",
+  pushNotification: "pushNotification",
 };
 
 export const tagTypesList = [
@@ -33,5 +35,7 @@ export const tagTypesList = [
   tagTypes.eventCategory,
   tagTypes.event,
   tagTypes.eventReport,
-  tagTypes.productReport
+  tagTypes.productReport,
+  tagTypes.profileReport,
+  tagTypes.pushNotification,
 ];

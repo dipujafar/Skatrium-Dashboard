@@ -20,8 +20,10 @@ const EventReportCard = ({ event, onViewDetails }: EventCardProps) => {
   const [address, setAddress] = useState('');
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewIndex, setPreviewIndex] = useState(0);
+  const [eventPreviewVisible, setEventPreviewVisible] = useState(false);
 
   const reviewImages: { url: string }[] = reviewData?.images || [];
+  const eventImage = eventData?.coverImage?.url;
 
   const [deleteEventReport, { isLoading: isDeleting }] = useDeleteEventReportMutation();
 
@@ -53,11 +55,10 @@ const EventReportCard = ({ event, onViewDetails }: EventCardProps) => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
         key={i}
-        className={`w-3.5 h-3.5 ${
-          i < Math.floor(rating)
-            ? "fill-[#FFBA49] text-[#FFBA49]"
-            : "fill-muted text-muted"
-        }`}
+        className={`w-3.5 h-3.5 ${i < Math.floor(rating)
+          ? "fill-[#FFBA49] text-[#FFBA49]"
+          : "fill-muted text-muted"
+          }`}
       />
     ));
   };
@@ -66,12 +67,24 @@ const EventReportCard = ({ event, onViewDetails }: EventCardProps) => {
     <>
       <div className="bg-white/10 rounded-xl overflow-hidden w-full max-w-sm border border-white/20 shadow-xl text-white">
         {/* Event Image Section */}
-        <div className="relative">
-          <Image
-            src={eventData?.coverImage?.url}
-            alt={event?.title}
-            className="w-full h-40 object-cover"
+        <div className="relative w-full h-56">
+          {/* Native img for layout; clicking opens Ant Design preview */}
+          <img
+            src={eventImage || "/default_banner_image.png"}
+            alt={eventData?.name}
+            className="w-full h-full object-cover block cursor-pointer"
+            onClick={() => setEventPreviewVisible(true)}
           />
+          {/* Hidden Ant Image — provides the lightbox preview */}
+          <div className="hidden">
+            <Image
+              src={eventImage || "/default_banner_image.png"}
+              preview={{
+                visible: eventPreviewVisible,
+                onVisibleChange: (vis) => setEventPreviewVisible(vis),
+              }}
+            />
+          </div>
           {/* Price Badge */}
           <div className="absolute bottom-3 left-3 bg-[#FA9416] text-primary-foreground px-2.5 py-0.5 rounded-md text-sm font-semibold">
             ${eventData?.price?.toFixed(1)}

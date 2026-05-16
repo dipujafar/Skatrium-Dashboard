@@ -75,7 +75,7 @@ const PromotionalMessagesContainer = () => {
     { label: "searchTerm", value: search },
   ]);
 
-  const [deletePromotion, { isLoading: isDeleteLoading }] = useDeletePromotionMutation();
+  const [deletePromotion] = useDeletePromotionMutation();
 
   const [createPromotionalMessage, { isLoading: isCreateLoading }] =
     useCreatePromotionalMessageMutation();

@@ -2,11 +2,11 @@
 import { Button, ConfigProvider, Form, Input, Spin } from "antd";
 import Image from "next/image";
 import { FiEdit } from "react-icons/fi";
-import profile from "@/assets/image/adminProfile.png";
 import { useState } from "react";
 import { Camera, Trash2 } from "lucide-react";
 import { useGetMyProfileQuery, useUpdateAdminProfileMutation } from "@/redux/api/profileApi";
 import { toast } from "sonner";
+import { blueDataImageBase64 } from "@/utils/blueDataImageBase64";
 
 const PersonalInformationContainer = () => {
   const [form] = Form.useForm();
@@ -20,6 +20,8 @@ const PersonalInformationContainer = () => {
 
 
 
+
+
   const handleProfileUpdate = async (values: {
     phoneNumber: string;
     email: string;
@@ -29,14 +31,20 @@ const PersonalInformationContainer = () => {
       try {
         const formData = new FormData();
 
+        console.log(values.name, values.phoneNumber);
+
         formData.append("fullName", values.name);
         formData.append("phoneNumber", values.phoneNumber);
+
+        console.log(fileName)
 
         if (fileName) {
           formData.append("image", fileName);
         }
 
         const res = await updateProfile(formData).unwrap();
+
+        console.log(res);
 
         toast.success("Successfully Change personal information", {
           duration: 1000,
@@ -102,23 +110,17 @@ const PersonalInformationContainer = () => {
         <div className='bg-primary-light-gray h-[365px] md:w-[350px] rounded-xl border border-main-color flex justify-center items-center  text-text-color'>
           <div className='space-y-1 relative'>
             <div className='relative group'>
-              {imageUrl ? (
-                <Image
-                  src={imageUrl}
-                  alt='adminProfile'
-                  width={1200}
-                  height={1200}
-                  className='size-36 rounded-full flex justify-center items-center object-cover'
-                ></Image>
-              ) : (
-                <Image
-                  src={profile}
-                  alt='adminProfile'
-                  width={1200}
-                  height={1200}
-                  className='size-36 rounded-full flex justify-center items-center object-cover'
-                ></Image>
-              )}
+
+              <Image
+                src={imageUrl || data?.data?.image?.url || "/default_banner_image.png"}
+                alt='adminProfile'
+                width={1200}
+                height={1200}
+                placeholder="blur"
+                blurDataURL={blueDataImageBase64()}
+                className='size-36 rounded-full flex justify-center items-center object-cover'
+              ></Image>
+
 
               {/* cancel button */}
               {fileName && imageUrl && (

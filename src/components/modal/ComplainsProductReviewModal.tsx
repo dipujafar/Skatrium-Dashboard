@@ -1,89 +1,158 @@
-'use client';
-import { AlertCircle, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import { Image, Modal } from "antd";
+import { useState } from "react";
+import { AlertCircle, ShoppingBag } from "lucide-react";
+import { Button } from "../ui/button";
 
-type ProductCardModalProps = {
+type TPropsType = {
     open: boolean;
-    setOpen: (open: boolean) => void;
+    setOpen: (collapsed: boolean) => void;
+    report: any;
+    onRemove: () => void;
+    isDeleting: boolean;
 };
 
-const ComplainsProductReviewModal = ({ open, setOpen }: ProductCardModalProps) => {
-    if (!open) return null;
+const ComplainsProductReportModal = ({ open, setOpen, report, onRemove, isDeleting }: TPropsType) => {
+    const productData = report?.product || {};
+    const reportedBy = report?.reportedBy || {};
+    const reviewData = report?.review || {};
+    const productImage = productData?.images?.[0]?.url;
+    const [productPreviewVisible, setProductPreviewVisible] = useState(false);
+
+    const renderStars = (rating: number) => {
+        return Array.from({ length: 5 }, (_, i) => (
+            <span key={i} className={`text-base ${i < Math.floor(rating) ? "text-[#FFBA49]" : "text-gray-500"}`}>
+                ★
+            </span>
+        ));
+    };
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-            <div className="relative bg-[#1a1a1a] rounded-2xl p-6 max-w-3xl w-full mx-4 max-h-[90vh] overflow-y-auto">
-                {/* Close Button */}
-                <button
-                    onClick={() => setOpen(false)}
-                    className="absolute top-4 right-4 p-1 hover:bg-zinc-700 rounded-full transition"
-                >
-                    <X className="w-5 h-5 text-white" />
-                </button>
+        <Modal
+            open={open}
+            footer={null}
+            centered={true}
+            onCancel={() => setOpen(false)}
+            closeIcon={false}
+            style={{
+                minWidth: "max-content",
+                position: "relative",
+            }}
+        >
+            <div className="max-w-xl">
 
-                {/* Product Image */}
-                <div className="relative overflow-hidden rounded-xl mb-4  bg-black mt-5">
+                {/* Reported By */}
+                <div className="flex items-center gap-x-2 mb-2">
                     <Image
-                        src="/product_image.png"
-                        alt="Product Image"
-                        width={400}
-                        height={280}
-                        className="w-full h-[280px] object-contain"
-                    />
-                </div>
+                        src={reportedBy?.image?.url}
+                        height={40}
+                        width={40}
+                        className="border border-main-color size-16 !rounded-full"
+                        fallback={`data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='34' height='34'><circle cx='17' cy='17' r='17' fill='%2300BFA5'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-size='14' font-weight='600' fill='white'>${reportedBy?.fullName?.charAt(0)}</text></svg>`}
 
-                {/* Product Title and Price */}
-                <div className="flex justify-between items-center">
-                    <h1 className="text-2xl font-bold text-white mb-2 max-w-xs">ProSkate Elite Performance Shoe</h1>
-                    <div className="flex items-center gap-2">
-                        <span className="text-3xl font-bold text-orange-400">$129.99</span>
-                        <span className="text-lg text-zinc-400 line-through">$179.00</span>
-                        <span className="text-green-400 font-semibold">28% OFF</span>
+                    />
+                    <div>
+                        <h1 className="text-lg font-semibold">{reportedBy?.fullName}</h1>
+                        <p className="text-xs">{reportedBy?.email}</p>
                     </div>
                 </div>
 
-                {/* Product Description */}
-                <div className="mb-2">
-                    <h2 className="text-lg font-semibold text-white mb-1">Product Description</h2>
-                    <p className="text-zinc-300 text-sm mb-2">
-                        Elevate your skating experience with the ProSkate Elite Performance Shoe. Engineered for both amateur and professional skaters, this shoe combines cutting-edge technology with superior comfort.
-                    </p>
-                    <p className="text-zinc-300 text-sm">
-                        The reinforced ankle support and shock-absorbing sole provide maximum stability during high-intensity movement, while the breathable mesh upper keeps your feet cool and dry.
-                    </p>
-                </div>
-
-                {/* User Info */}
-                <div className="flex items-center gap-3 mb-6 pb-6 border-b border-zinc-700">
-                    <Image
-                        src="/user_image.jpg"
-                        alt="Jack Robo"
-                        width={44}
-                        height={44}
-                        className="w-11 h-11 rounded-full object-cover bg-zinc-700"
-                    />
-                    <h3 className="text-white font-semibold">Jack Robo</h3>
-                </div>
-
-                {/* Reason For Report */}
-                <div className="mb-4">
-                    <h2 className="text-lg font-semibold text-white mb-3">Reason For report</h2>
-                    <div className="bg-red-950 border border-red-700 rounded-xl p-2 flex items-center gap-3">
-                        <div className="bg-red-900 p-2 rounded-md flex-shrink-0 mt-0.5">
-                            <AlertCircle className="w-4 h-4 text-red-300" />
+                <div>
+                    {/* Product Image */}
+                    <div className="relative overflow-hidden rounded-t-2xl h-[300px]">
+                        <img
+                            src={productImage || "/default_banner_image.png"}
+                            alt="product image"
+                            className="w-full h-full object-cover block cursor-pointer"
+                            onClick={() => setProductPreviewVisible(true)}
+                        />
+                        {/* Hidden Ant Image for lightbox preview */}
+                        <div className="hidden">
+                            <Image
+                                src={productImage}
+                                preview={{
+                                    visible: productPreviewVisible,
+                                    onVisibleChange: (vis) => setProductPreviewVisible(vis),
+                                }}
+                            />
                         </div>
-                        <p className="text-red-200 text-sm">Just to let you know this might be a problem</p>
-                    </div>
-                </div>
 
-                {/* Remove Post Button */}
-                <Button className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-6 rounded-full transition">
-                    Remove Post
-                </Button>
+                        {/* Overlay Content */}
+                        <div className="rounded-b-2xl pt-3 absolute bottom-0 left-2">
+                            <p className="bg-[#FA9416] w-fit px-2 rounded-full font-medium mb-2">
+                                ${productData?.price}
+                            </p>
+                            <h1 className="text-xl md:text-2xl font-bold text-white mb-2 flex items-center gap-2">
+                                <ShoppingBag className="w-5 h-5" />
+                                {productData?.name}
+                            </h1>
+                        </div>
+                    </div>
+
+                    {/* Review Info */}
+                    <div className="mt-3 flex items-start gap-3 bg-white/5 rounded-xl p-3">
+                        <Image
+                            src={reviewData?.user?.image?.url}
+                            height={40}
+                            width={40}
+                            className="border border-main-color !rounded-full"
+                            fallback={`data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='34' height='34'><circle cx='17' cy='17' r='17' fill='%2300BFA5'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-size='14' font-weight='600' fill='white'>${reviewData?.user?.fullName?.charAt(0)}</text></svg>`}
+
+                        />
+                        <div className="flex-1">
+                            <div className="flex items-center justify-between">
+                                <span className="font-medium text-white text-sm">{reviewData?.user?.fullName}</span>
+                                <div className="flex items-center gap-1">
+                                    <div className="flex">{renderStars(reviewData?.rating)}</div>
+                                    <span className="text-muted-foreground text-xs">{reviewData?.rating}/5</span>
+                                </div>
+                            </div>
+                            <p className="text-xs text-gray-400">{reviewData?.user?.email}</p>
+                            <p className="text-[#CBD5E1] text-sm mt-1">{reviewData?.comment}</p>
+                        </div>
+                    </div>
+
+                    {/* Reason For Report */}
+                    <section className="mt-3">
+                        <h2 className="text-xl font-semibold text-white mb-2">Reason For report</h2>
+                        <div className="bg-[#580505] p-2 border border-red-300 flex gap-x-2 items-start rounded-xl">
+                            <div className="bg-[#8B0505] p-1 rounded-md flex-shrink-0">
+                                <AlertCircle size={18} />
+                            </div>
+                            <div className="flex-1">
+                                <p>{report?.reason}</p>
+
+                                {/* Review images thumbnails with preview */}
+                                {reportedBy?.image?.url && (
+                                    <div className="flex items-center gap-2 mt-2 flex-wrap">
+                                        <Image.PreviewGroup>
+                                            <Image
+                                                key={"image"}
+                                                src={reportedBy?.image?.url}
+                                                width={56}
+                                                height={56}
+                                                className="!rounded-lg object-cover cursor-pointer"
+                                                style={{ borderRadius: 8 }}
+                                            />
+
+                                        </Image.PreviewGroup>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Remove button */}
+                    <Button
+                        className="w-full mt-4 bg-[#FF4848] hover:bg-slate-700 disabled:opacity-50"
+                        disabled={isDeleting}
+                        onClick={onRemove}
+                    >
+                        {isDeleting ? "Removing..." : "Remove Post"}
+                    </Button>
+                </div>
             </div>
-        </div>
+        </Modal>
     );
 };
 
-export default ComplainsProductReviewModal;
+export default ComplainsProductReportModal;

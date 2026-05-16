@@ -1,3 +1,4 @@
+import { tagTypes } from "../tagTypes";
 import { baseApi } from "./baseApi";
 
 const productReportApi = baseApi.injectEndpoints({
@@ -8,12 +9,14 @@ const productReportApi = baseApi.injectEndpoints({
         method: "GET",
         params,
       }),
+      providesTags: [tagTypes.productReport],
     }),
     deleteProductReport: builder.mutation({
       query: (id) => ({
         url: `/ProductReport/admin/reports/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: [tagTypes.productReport],
     }),
   }),
 });

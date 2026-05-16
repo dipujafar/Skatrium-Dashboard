@@ -4,6 +4,7 @@ import Link from "next/link";
 import {
   AlignJustify,
   Award,
+  BellDot,
   ChartColumnIncreasing,
   CircleAlert,
   ClipboardList,
@@ -67,6 +68,11 @@ export const navLinks = [
     key: "earning",
     icon: <Wallet size={18} />,
     label: <Link href={"/admin/earning"}>Earning</Link>,
+  },
+  {
+    key: "push-notification",
+    icon: <BellDot size={18} />,
+    label: <Link href={"/admin/push-notification"}>Push Notification</Link>,
   },
   {
     key: "settings",
