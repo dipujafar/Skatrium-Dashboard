@@ -184,6 +184,7 @@ tspan{
   fill: #ffffff !important;
 }
 
+
 @layer base {
   :root {
     --background: 0 0% 100%;

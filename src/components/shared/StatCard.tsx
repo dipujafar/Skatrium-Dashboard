@@ -1,6 +1,4 @@
-import { GownIcon } from "@/icons";
 import { cn } from "@/lib/utils";
-import { ArrowUp } from "lucide-react";
 import { ReactNode } from "react";
 import CountUp from "react-countup";
 

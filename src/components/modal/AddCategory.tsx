@@ -35,9 +35,6 @@ const AddCategory = ({ open, setOpen }: TPropsType) => {
 
     const onSubmit = async (data: CategoryFormData) => {
         try {
-            console.log("Form data:", {
-                name: data.name,
-            });
             const formattedData = {
                 name: data?.name
             }

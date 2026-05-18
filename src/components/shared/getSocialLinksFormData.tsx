@@ -1,5 +1,5 @@
 
-import { FaFacebook, FaInstagram, FaLink, FaLinkedin, FaTiktok, FaTwitter, FaYoutube } from "react-icons/fa6";
+import { FaFacebook, FaInstagram, FaLinkedin, FaTiktok, FaTwitter, FaYoutube } from "react-icons/fa6";
 
 const socialMediaLink = {
   facebook: <FaFacebook size={28} />,

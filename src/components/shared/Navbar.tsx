@@ -33,8 +33,6 @@ const Navbar = ({ collapsed, setCollapsed }: TNavbarProps) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  console.log(data?.data?.image?.url)
-
   return (
     <div className='flex items-center justify-between w-[97%] font-poppins text-text-color xl:px-8 px-4'>
       {/* Header left side */}

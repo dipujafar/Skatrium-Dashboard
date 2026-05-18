@@ -41,8 +41,6 @@ const SubscribeEmailTable = () => {
 
     const { data, isLoading } = useGetSubscriptionUsersQuery(queries);
 
-    console.log(data?.data?.meta?.total)
-
     const columns: TableProps<TUser>["columns"] = [
         {
             title: "ID",

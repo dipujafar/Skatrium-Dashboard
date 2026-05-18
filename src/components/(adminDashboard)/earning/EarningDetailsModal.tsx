@@ -1,4 +1,4 @@
-import { Avatar, Divider, Modal } from "antd";
+import { Avatar, Modal } from "antd";
 import { RiCloseLargeLine } from "react-icons/ri";
 
 type TPropsType = {

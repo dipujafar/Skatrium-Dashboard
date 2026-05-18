@@ -1,21 +1,19 @@
-"use client";
-import { Error_Modal, Success_model } from "@/lib/utils";
-import { useGetSettingsQuery, useUpdateSettingsMutation } from "@/redux/api/settingsApi";
-import { TSettings } from "@/types";
+"use client";;
+import { Error_Modal } from "@/lib/utils";
+import { useUpdateSettingsMutation } from "@/redux/api/contentApi";
 import { Button } from "antd";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-// import { FaArrowLeft } from "react-icons/fa6";
+// @ts-ignore
 import "react-quill/dist/quill.snow.css";
+import { toast } from "sonner";
 
 // Dynamically import ReactQuill with SSR disabled
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-const PrivacyPolicyEditor = () => {
-  const route = useRouter();
-  const [value, setValue] = useState("<p>Lorem ipsum dolor sit amet consectetur. Posuere leo nunc eu phasellus consequat egestas diam mattis magna. Dui nullam gravida turpis fames metus ultrices sed mattis. Amet vivamus mus eget purus purus at massa non. In tristique sapien etiam orci convallis. Viverra mauris consectetur integer nisl pellentesque potenti pharetra. Cras gravida ut ullamcorper urna mauris ultricies. Ridiculus aliquam nec sodales lacus proin sit dictumst id. Massa et vulputate ac viverra sit dignissim quis morbi. Malesuada sed ut ut etiam mattis.</p>");
-  const [updateSetting] = useUpdateSettingsMutation();
+const PrivacyPolicyEditor = ({ data, role }: any) => {
+  const [value, setValue] = useState(data?.content || "");
+  const [updateSetting, { isLoading }] = useUpdateSettingsMutation();
   const toolbarOptions = [
     ["image"],
     [{ header: [1, 2, false] }],
@@ -29,36 +27,28 @@ const PrivacyPolicyEditor = () => {
     toolbar: toolbarOptions,
   };
 
-  const { data, isLoading } = useGetSettingsQuery([]);
-  const settingsData = data?.data as TSettings;
+
 
   const handleUpdateSettings = async () => {
     try {
       await updateSetting({
-        privacy: value,
+        role,
+        type: "privacy_policy",
+        content: value,
       }).unwrap();
 
-      Success_model({ title: "Settings updated successfully" });
+      toast.success(`${role} Privacy Policy updated successfully`);
     } catch (error: any) {
-      console.log(error);
       Error_Modal({ title: error?.data?.message });
     }
   };
   useEffect(() => {
-    if (settingsData) {
-      setValue(settingsData.privacy);
-    }
-  }, [settingsData]);
+    setValue(data?.content);
+  }, [data?.content]);
 
   return (
     <>
       <div className='flex items-center gap-2'>
-        {/* <span
-          onClick={() => route.back()}
-          className='cursor-pointer bg-main-color p-2 rounded-full'
-        >
-          <FaArrowLeft size={20} color='#fff' />
-        </span> */}
         <h4 className='text-2xl font-medium text-text-color'>Privacy Policy</h4>
       </div>
       <ReactQuill
@@ -72,20 +62,21 @@ const PrivacyPolicyEditor = () => {
           marginTop: "20px",
           borderRadius: "10px",
           backgroundColor: "#68c0a114",
+          
         }}
-        className="placeholder:!text-white"
+        className="placeholder:!text-white "
       />
       <Button
         size='large'
         block
-        className='bg-[#fcb806] hover:!bg-[#fcb806]/90 text-white hover:!text-white border-none'
+        className='bg-[#fcb806] hover:!bg-[#fcb806]/90 text-white hover:!text-white border-none disabled:bg-[#fcb806]/50 disabled:text-white'
         style={{
           marginTop: "20px",
         }}
         onClick={handleUpdateSettings}
-        disabled={!value}
+        disabled={!value || isLoading || value === data?.content}
       >
-        Save Changes
+        Save Changes {isLoading && "..." }
       </Button>
     </>
   );

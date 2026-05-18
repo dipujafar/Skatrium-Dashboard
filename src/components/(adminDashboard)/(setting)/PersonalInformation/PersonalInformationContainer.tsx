@@ -18,10 +18,6 @@ const PersonalInformationContainer = () => {
   const [updateProfile, { isLoading: isUpdateProfileLoading }] = useUpdateAdminProfileMutation();
 
 
-
-
-
-
   const handleProfileUpdate = async (values: {
     phoneNumber: string;
     email: string;
@@ -31,20 +27,15 @@ const PersonalInformationContainer = () => {
       try {
         const formData = new FormData();
 
-        console.log(values.name, values.phoneNumber);
-
         formData.append("fullName", values.name);
         formData.append("phoneNumber", values.phoneNumber);
 
-        console.log(fileName)
 
         if (fileName) {
           formData.append("image", fileName);
         }
 
         const res = await updateProfile(formData).unwrap();
-
-        console.log(res);
 
         toast.success("Successfully Change personal information", {
           duration: 1000,

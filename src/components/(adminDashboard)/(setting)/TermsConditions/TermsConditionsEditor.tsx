@@ -1,22 +1,20 @@
-"use client";
-
+"use client";;
 import { Error_Modal, Success_model } from "@/lib/utils";
-import { useGetSettingsQuery, useUpdateSettingsMutation } from "@/redux/api/settingsApi";
-import { TSettings } from "@/types";
+import { useUpdateSettingsMutation } from "@/redux/api/contentApi";
 import { Button } from "antd";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-// import { FaArrowLeft } from "react-icons/fa6";
+// @ts-ignore
 import "react-quill/dist/quill.snow.css";
+import { toast } from "sonner";
 
 // Dynamically import ReactQuill with SSR disabled
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-const TermsConditionsEditor = () => {
-  const route = useRouter();
-  const [value, setValue] = useState("<p>Lorem ipsum dolor sit amet consectetur. Posuere leo nunc eu phasellus consequat egestas diam mattis magna. Dui nullam gravida turpis fames metus ultrices sed mattis. Amet vivamus mus eget purus purus at massa non. In tristique sapien etiam orci convallis. Viverra mauris consectetur integer nisl pellentesque potenti pharetra. Cras gravida ut ullamcorper urna mauris ultricies. Ridiculus aliquam nec sodales lacus proin sit dictumst id. Massa et vulputate ac viverra sit dignissim quis morbi. Malesuada sed ut ut etiam mattis.</p>");
-  const [updateSetting] = useUpdateSettingsMutation();
+const TermsConditionsEditor = ({ data, role }: any) => {
+  const [value, setValue] = useState(data?.content || "");
+  const [updateSetting, { isLoading }] = useUpdateSettingsMutation();
 
   const toolbarOptions = [
     ["image"],
@@ -31,26 +29,26 @@ const TermsConditionsEditor = () => {
     toolbar: toolbarOptions,
   };
 
-  const { data, isLoading } = useGetSettingsQuery([]);
-  const settingsData = data?.data as TSettings;
+
 
   const handleUpdateSettings = async () => {
     try {
       await updateSetting({
-        terms: value,
+        role,
+        type: "terms_conditions",
+        content: value,
       }).unwrap();
 
-      Success_model({ title: "Settings updated successfully" });
+      toast.success(`${role} Terms & Conditions updated successfully`);
     } catch (error: any) {
-      console.log(error);
       Error_Modal({ title: error?.data?.message });
     }
   };
+
+
   useEffect(() => {
-    if (settingsData) {
-      setValue(settingsData.terms);
-    }
-  }, [settingsData]);
+    setValue(data?.content);
+  }, [data?.content]);
 
   return (
     <>
@@ -78,15 +76,15 @@ const TermsConditionsEditor = () => {
       />
       <Button
         size='large'
-        className='bg-[#fcb806] hover:!bg-[#fcb806]/90 text-white hover:!text-white border-none'
         block
+        className='bg-[#fcb806] hover:!bg-[#fcb806]/90 text-white hover:!text-white border-none disabled:bg-[#fcb806]/50 disabled:text-white'
         style={{
           marginTop: "20px",
         }}
         onClick={handleUpdateSettings}
-        disabled={!value || isLoading}
+        disabled={!value || isLoading || value === data?.content}
       >
-        Save Changes
+        Save Changes {isLoading && "..." }
       </Button>
     </>
   );

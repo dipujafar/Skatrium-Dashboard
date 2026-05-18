@@ -1,20 +1,22 @@
 "use client";
-
+import { Error_Modal } from "@/lib/utils";
+import { useUpdateSettingsMutation } from "@/redux/api/contentApi";
 import { Button } from "antd";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { FaArrowLeft } from "react-icons/fa6";
+import { useEffect, useState } from "react";
+// @ts-ignore
 import "react-quill/dist/quill.snow.css";
+import { toast } from "sonner";
 
 // Dynamically import ReactQuill with SSR disabled
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-const AboutUsEditor = () => {
-  const route = useRouter();
+const AboutUsEditor = ({ data, role }: any) => {
+
   const [value, setValue] = useState(
-    "<h2>Lorem ipsum dolor sit amet consectetur. Fringilla a cras vitae orci. Egestas duis id nisl sed ante congue scelerisque. Eleifend facilisis aliquet tempus morbi leo sagittis. Pellentesque odio amet turpis habitant. Imperdiet tincidunt nisl consectetur hendrerit accumsan vehicula imperdiet mattis. Neque a vitae diam pharetra duis habitasse convallis luctus pulvinar. Pharetra nunc morbi elementum nisl magnis convallis arcu enim tortor.</h2><p><br/></p><h2>In today’s rapidly evolving world, the importance of education cannot be overstated. Technological advancements, global interconnectivity, and the proliferation of information demand that we continuously adapt and expand our understanding. An educated individual is better prepared to tackle these challenges, innovate, and drive progress. Moreover, education promotes equality and social justice, providing marginalized groups with the means to uplift themselves and break cycles of poverty.</h2><p><br/></p><h2>Education also nurtures empathy and cultural awareness, fostering a more inclusive and understanding society. By learning about diverse perspectives and histories, we become more open-minded and respectful of differences, which is crucial in a world that is increasingly interconnected. This cultural competence not only enhances personal relationships but also strengthens international collaboration and peace.....</h2>"
+    data?.content || ""
   );
+  const [updateSetting, { isLoading }] = useUpdateSettingsMutation();
 
   const toolbarOptions = [
     ["image"],
@@ -29,15 +31,29 @@ const AboutUsEditor = () => {
     toolbar: toolbarOptions,
   };
 
+
+  const handleUpdateSettings = async () => {
+    try {
+      await updateSetting({
+        role,
+        type: "about_us",
+        content: value,
+      }).unwrap();
+
+      toast.success(`${role} about us updated successfully`);
+    } catch (error: any) {
+      Error_Modal({ title: error?.data?.message });
+    }
+  };
+
+  useEffect(() => {
+    setValue(data?.content);
+  }, [data?.content]);
+
+
   return (
     <>
       <div className="flex items-center gap-2">
-        {/* <span
-          onClick={() => route.back()}
-          className="cursor-pointer bg-main-color p-2 rounded-full"
-        >
-          <FaArrowLeft size={20} color="#fff" />
-        </span> */}
         <h4 className="text-2xl font-medium text-text-color">About Us</h4>
       </div>
       <ReactQuill
@@ -54,13 +70,16 @@ const AboutUsEditor = () => {
         }}
       />
       <Button
-        size="large"
+        size='large'
         block
+        className='bg-[#fcb806] hover:!bg-[#fcb806]/90 text-white hover:!text-white border-none disabled:bg-[#fcb806]/50 disabled:text-white'
         style={{
           marginTop: "20px",
         }}
+        onClick={handleUpdateSettings}
+        disabled={!value || isLoading || value === data?.content}
       >
-        Save Changes
+        Save Changes {isLoading && "..." }
       </Button>
     </>
   );
