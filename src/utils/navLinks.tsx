@@ -58,17 +58,17 @@ export const navLinks = [
     icon: <SquareStack size={18} />,
     label: <Link href={"/admin/categories"}>Categories</Link>,
   },
-  {
-    key: "subscription",
-    icon: <Podcast size={18} />,
-    label: <Link href={"/admin/subscription"}>Subscriptions</Link>,
-  },
+  // {
+  //   key: "subscription",
+  //   icon: <Podcast size={18} />,
+  //   label: <Link href={"/admin/subscription"}>Subscriptions</Link>,
+  // },
 
-  {
-    key: "earning",
-    icon: <Wallet size={18} />,
-    label: <Link href={"/admin/earning"}>Earning</Link>,
-  },
+  // {
+  //   key: "earning",
+  //   icon: <Wallet size={18} />,
+  //   label: <Link href={"/admin/earning"}>Earning</Link>,
+  // },
   {
     key: "push-notification",
     icon: <BellDot size={18} />,

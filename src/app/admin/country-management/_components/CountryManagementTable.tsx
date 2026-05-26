@@ -55,9 +55,9 @@ const CountryManagementTable = () => {
                 <DataTable
                     columns={columns}
                     data={data}
-                    pagination={true}
+                    // pagination={true}
                 ></DataTable>
-                <UserDetails open={open} setOpen={setOpen}></UserDetails>
+                {/* <UserDetails open={open} setOpen={setOpen}></UserDetails> */}
             </div>
         </div>
     );
