@@ -184,6 +184,10 @@ tspan{
   fill: #ffffff !important;
 }
 
+.ant-collapse-expand-icon > svg{
+  stroke: #ffffff !important;
+}
+
 
 @layer base {
   :root {

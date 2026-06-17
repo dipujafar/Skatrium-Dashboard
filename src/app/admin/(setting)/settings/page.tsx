@@ -46,6 +46,11 @@ const SettingsPage = () => {
             label: 'Skate DJ',
             children: <SettingContainer data={data?.data} role={role} />,
         },
+        {
+            key: '5',
+            label: 'Admin',
+            children: <SettingContainer data={data?.data} role={role} />,
+        }
     ];
 
     return (

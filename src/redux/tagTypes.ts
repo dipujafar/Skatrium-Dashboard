@@ -18,6 +18,7 @@ export const tagTypes = {
   profileReport: "profileReport",
   pushNotification: "pushNotification",
   content: "content",
+  faqs: "faqs",
 };
 
 export const tagTypesList = [
@@ -40,4 +41,5 @@ export const tagTypesList = [
   tagTypes.profileReport,
   tagTypes.pushNotification,
   tagTypes.content,
+  tagTypes.faqs
 ];

@@ -1,26 +1,9 @@
-import { RiDashboardHorizontalFill, RiLogoutCircleLine } from "react-icons/ri";
+import { RiDashboardHorizontalFill } from "react-icons/ri";
 import { GoPeople } from "react-icons/go";
 import Link from "next/link";
-import {
-  AlignJustify,
-  Award,
-  BellDot,
-  ChartColumnIncreasing,
-  CircleAlert,
-  ClipboardList,
-  Globe,
-  Handshake,
-  ListChecks,
-  LogOut,
-  Mail,
-  Megaphone,
-  Podcast,
-  SquareStack,
-  Star,
-  Wallet,
-  WalletCards,
-} from "lucide-react";
+import { BellDot, CircleAlert, Mail, Megaphone, SquareStack } from "lucide-react";
 import { IoSettingsOutline } from "react-icons/io5";
+import { BsPatchQuestion } from "react-icons/bs";
 
 export const navLinks = [
   {
@@ -73,6 +56,11 @@ export const navLinks = [
     key: "push-notification",
     icon: <BellDot size={18} />,
     label: <Link href={"/admin/push-notification"}>Push Notification</Link>,
+  },
+  {
+    key: "faq",
+    icon: <BsPatchQuestion size={18} />,
+    label: <Link href={"/admin/faqs"}>FAQs</Link>,
   },
   {
     key: "settings",
