@@ -21,6 +21,7 @@ export default function DownloadFile() {
         uploadedAgo: "just now",
       })
     }
+    e.target.value = ""
   }
 
   return (
