@@ -9,7 +9,7 @@ import { Button, Checkbox, Form, Input, Flex } from "antd";
 import Link from "next/link";
 import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/navigation";
-import useFcmToken from "@/hooks/useFcmToken";
+// import useFcmToken from "@/hooks/useFcmToken";
 
 type FieldType = {
   email?: string;
@@ -24,15 +24,15 @@ const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
 const LoginForm = () => {
   const dispatch = useAppDispatch();
   const [login, { isLoading }] = useLoginMutation();
-  const { fcmToken } = useFcmToken();
+  // const { fcmToken } = useFcmToken();
   const router = useRouter();
 
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
     try {
       const userData: any = { email: values?.email, password: values?.password };
-      if (fcmToken) {
-        userData["fcmToken"] = fcmToken;
-      }
+      // if (fcmToken) {
+      //   userData["fcmToken"] = fcmToken;
+      // }
       const res = await login(userData).unwrap();
 
 
