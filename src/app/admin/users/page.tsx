@@ -14,17 +14,17 @@ const items: TabsProps['items'] = [
   },
   {
     key: '2',
-    label: 'Organizer',
+    label: 'Organiser',
     children: <OrganizerTable />,
   },
   {
     key: '3',
-    label: 'Marchent',
+    label: 'Merchant',
     children: <MarchentTable />,
   },
   {
     key: '4',
-    label: 'DJ SKATE',
+    label: 'Skate DJ',
     children: <DJSKATETable />,
   }
 ];

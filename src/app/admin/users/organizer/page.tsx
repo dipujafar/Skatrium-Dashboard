@@ -22,20 +22,20 @@ export default function OrganizerPage() {
 
 
 
-    const [formData, setFormData] = useState({
-        firstName: "Jane",
-        lastName: "Cooper",
-        phone: "(201) 555-0136",
-        email: "dustin.h@example.com",
-        location: "2972 Westheimer Rd. Santa Ana, Illinois 854864",
-        organisationName: "Ultra Skating",
-        instagramLink: "iijSjhUwQsL6HwAdWwl/ gudoslib-%7C%",
-        websiteLink: "iijSjhUwQsL6HwAdWwl/ gudoslib-%7C%",
-        hasOrganisedEvents: "Yes",
-        eventType: "Roller Skating",
-        estimatedAttendees: "24",
-        previousEventsLink: "iijSjhUwQsL6HwAdWwl/ gudoslib-%7C%",
-    });
+    // const [formData, setFormData] = useState({
+    //     firstName: "Jane",
+    //     lastName: "Cooper",
+    //     phone: "(201) 555-0136",
+    //     email: "dustin.h@example.com",
+    //     location: "2972 Westheimer Rd. Santa Ana, Illinois 854864",
+    //     organisationName: "Ultra Skating",
+    //     instagramLink: "iijSjhUwQsL6HwAdWwl/ gudoslib-%7C%",
+    //     websiteLink: "iijSjhUwQsL6HwAdWwl/ gudoslib-%7C%",
+    //     hasOrganisedEvents: "Yes",
+    //     eventType: "Roller Skating",
+    //     estimatedAttendees: "24",
+    //     previousEventsLink: "iijSjhUwQsL6HwAdWwl/ gudoslib-%7C%",
+    // });
 
 
 
@@ -65,13 +65,13 @@ export default function OrganizerPage() {
     }, [userData?.location?.coordinates]);
 
 
-    const handleCancel = () => {
-        alert("Form cancelled")
-    }
+    // const handleCancel = () => {
+    //     alert("Form cancelled")
+    // }
 
-    const handleApprove = () => {
-        alert("Form approved!")
-    }
+    // const handleApprove = () => {
+    //     alert("Form approved!")
+    // }
 
 
     if (!isLoading) {
@@ -151,7 +151,7 @@ export default function OrganizerPage() {
             </div>
 
             {/* Experience & Event Information */}
-            <div className="mb-8">
+            {/* <div className="mb-8">
                 <h3 className="text-white text-lg font-semibold mb-6">Experience & Event Information</h3>
                 <div className="space-y-6">
                     <div>
@@ -179,10 +179,10 @@ export default function OrganizerPage() {
                         <Link href={formData.previousEventsLink} className="text-gray-400  break-all"><FaLink size={34} /></Link>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             {/* Legal & Safety Information */}
-            <div className="mb-4">
+            {/* <div className="mb-4">
                 <h3 className="text-white text-lg font-semibold mb-6">Legal & Safety Information</h3>
                 <div className="space-y-6">
                     <div>
@@ -203,10 +203,10 @@ export default function OrganizerPage() {
                     </div>
 
                 </div>
-            </div>
+            </div> */}
 
             {/* Action Buttons */}
-            <div className="flex gap-4 mb-4">
+            {/* <div className="flex gap-4 mb-4">
                 <Button
                     onClick={handleCancel}
                     className="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-full py-3"
@@ -219,7 +219,7 @@ export default function OrganizerPage() {
                 >
                     Approve
                 </Button>
-            </div>
+            </div> */}
         </div>
     )
 }

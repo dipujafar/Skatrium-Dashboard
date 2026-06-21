@@ -34,7 +34,12 @@ const UserTable = () => {
     const queries: Record<string, string> = {};
     if (page) queries.page = page;
     if (limit) queries.limit = limit;
-    if (searchValue) queries.search = searchValue;
+    if (searchValue) {
+        delete queries.page
+        delete queries.limit
+        queries.search = searchValue
+    
+    };
 
     const { data: usersData, isLoading } = useGetAllUserQuery(queries);
     

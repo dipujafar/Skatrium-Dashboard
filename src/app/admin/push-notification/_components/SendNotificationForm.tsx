@@ -6,9 +6,9 @@ import { toast } from "sonner";
 
 const USER_ROLES = [
     { label: "User", value: "USER" },
-    { label: "Organizer", value: "ORGANIZER" },
-    { label: "Marchent", value: "MARCHANT" },
-    { label: "Kaatedj", value: "KAATEDJ" },
+    { label: "Organiser", value: "ORGANIZER" },
+    { label: "Merchant", value: "MARCHANT" },
+    { label: "Skate DJ", value: "KAATEDJ" },
 ];
 
 const SendNotificationForm = () => {
@@ -43,7 +43,7 @@ const SendNotificationForm = () => {
                 <label className="text-white text-sm font-medium">Notification Title</label>
                 <input
                     type="text"
-                    placeholder="write Notifications"
+                    placeholder="Write Notifications"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     className="w-full bg-white/10 border border-white/20 rounded-full px-5 py-3 text-white placeholder:text-white/40 outline-none focus:border-white/40 transition-colors text-sm"
@@ -54,7 +54,7 @@ const SendNotificationForm = () => {
             <div className="flex flex-col gap-2">
                 <label className="text-white text-sm font-medium">Description</label>
                 <textarea
-                    placeholder="write Description"
+                    placeholder="Write Description"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     rows={5}

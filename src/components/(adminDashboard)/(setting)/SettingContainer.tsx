@@ -4,6 +4,7 @@ import PrivacyPolicyEditor from "./privacyPolicy/PrivacyPolicyEditor";
 import TermsConditionsEditor from "./TermsConditions/TermsConditionsEditor";
 import AboutUsEditor from "./aboutUs/AboutUsEditor";
 import MissionStatement from "./missionStatement/MissionStatement";
+import FAQsContainer from "@/app/admin/faqs/_components/FAQsContainer";
 
 const SettingContainer = ({  data, role }: { data: any, role: string }) => {
 
@@ -32,7 +33,13 @@ const SettingContainer = ({  data, role }: { data: any, role: string }) => {
       key: '4',
       label: 'Mission Statement',
       children: <MissionStatement data={missionStatement} role={role} />,
+    },
+    {
+      key: '5',
+      label: 'FAQ',
+      children: <FAQsContainer />,
     }
+
   ];
 
   return (

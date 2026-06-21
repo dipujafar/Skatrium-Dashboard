@@ -33,24 +33,24 @@ const SettingsPage = () => {
         },
         {
             key: '2',
-            label: 'Organizer',
+            label: 'Organiser',
             children: <SettingContainer data={data?.data}  role={role}/>,
         },
         {
             key: '3',
-            label: 'Marchent',
+            label: 'Merchant',
             children: <SettingContainer data={data?.data} role={role} />,
         },
         {
             key: '4',
             label: 'Skate DJ',
             children: <SettingContainer data={data?.data} role={role} />,
-        },
-        {
-            key: '5',
-            label: 'Admin',
-            children: <SettingContainer data={data?.data} role={role} />,
         }
+        // {
+        //     key: '5',
+        //     label: 'Admin',
+        //     children: <SettingContainer data={data?.data} role={role} />,
+        // }
     ];
 
     return (

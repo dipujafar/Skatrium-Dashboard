@@ -24,7 +24,7 @@ export const navLinks = [
   {
     key: "complains",
     icon: <CircleAlert size={18} />,
-    label: <Link href={"/admin/complains"}>Complains</Link>,
+    label: <Link href={"/admin/complains"}>Complaints</Link>,
   },
   {
     key: "events",
@@ -57,11 +57,11 @@ export const navLinks = [
     icon: <BellDot size={18} />,
     label: <Link href={"/admin/push-notification"}>Push Notification</Link>,
   },
-  {
-    key: "faq",
-    icon: <BsPatchQuestion size={18} />,
-    label: <Link href={"/admin/faqs"}>FAQs</Link>,
-  },
+  // {
+  //   key: "faq",
+  //   icon: <BsPatchQuestion size={18} />,
+  //   label: <Link href={"/admin/faqs"}>FAQs</Link>,
+  // },
   {
     key: "settings",
     icon: <IoSettingsOutline size={18} />,

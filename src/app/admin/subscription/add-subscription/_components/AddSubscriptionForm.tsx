@@ -187,9 +187,9 @@ export default function SubscriptionPlanForm() {
                                                     </SelectTrigger>
                                                 </FormControl>
                                                 <SelectContent>
-                                                    <SelectItem value="ORGANIZER">Organizer</SelectItem>
+                                                    <SelectItem value="ORGANIZER">Organiser</SelectItem>
                                                     <SelectItem value="MARCHANT">Marchant</SelectItem>
-                                                    <SelectItem value="KAATEDJ">KaateDJ</SelectItem>
+                                                    <SelectItem value="KAATEDJ">Skate DJ</SelectItem>
                                                 </SelectContent>
                                             </Select>
                                             <FormMessage />

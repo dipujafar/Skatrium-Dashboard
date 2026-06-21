@@ -36,7 +36,10 @@ const SubscribeEmailTable = () => {
     const queries: Record<string, string | number> = {};
     if (page) queries.page = page;
     if (limit) queries.limit = limit;
-    if (searchValue) queries.search = searchValue;
+    if (searchValue) {
+        delete queries.page
+        delete queries.limit
+        queries.search = searchValue};
     queries.status = "active"
 
     const { data, isLoading } = useGetSubscriptionUsersQuery(queries);
