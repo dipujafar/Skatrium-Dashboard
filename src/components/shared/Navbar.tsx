@@ -14,7 +14,7 @@ import { useGetMyProfileQuery } from "@/redux/api/profileApi";
 import { logout } from "@/redux/features/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { TUser } from "@/types";
-import { Avatar, Flex, Image } from "antd";
+import { Flex, Image } from "antd";
 import { ChevronRight, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -51,7 +51,7 @@ const Navbar = ({ collapsed, setCollapsed }: TNavbarProps) => {
           <h2 className='text-lg  font-medium'>
             Dashboard
             <span className='block  text-sm font-normal'>
-              {greeting}, Alex Jr.
+              {greeting}, {user?.fullName}
             </span>
           </h2>
         </div>
@@ -92,17 +92,17 @@ const Navbar = ({ collapsed, setCollapsed }: TNavbarProps) => {
                   height={40}
                   width={40}
                   className='border border-main-color size-16 !rounded-full'
-                  fallback={`data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='34' height='34'><circle cx='17' cy='17' r='17' fill='%2300BFA5'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-size='14' font-weight='600' fill='white'>${data?.data?.fullName?.charAt(0)}</text></svg>`}
+                  fallback={`data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='34' height='34'><circle cx='17' cy='17' r='17' fill='%2300BFA5'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-size='14' font-weight='600' fill='white'>${user?.fullName?.charAt(0)}</text></svg>`}
                   preview={false}
                 ></Image>
-                <h4
+                {/* <h4
                   className={cn(
                     "text-base font-medium truncate flex-1 text-white",
                     collapsed && "hidden",
                   )}
                 >
                   {user?.name}
-                </h4>
+                </h4> */}
               </div>
             </MenubarTrigger>
             <MenubarContent className='text-primary-gray bg-[#111827]'>

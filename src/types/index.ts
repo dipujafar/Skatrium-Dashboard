@@ -42,7 +42,7 @@ export type TUserRole = "ADMIN" | "USER";
 
 export type TUser = {
   id: string;
-  name: string;
+  fullName: string;
   email: string;
   role: string;
   profilePicture: string;

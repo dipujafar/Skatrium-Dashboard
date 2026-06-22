@@ -80,7 +80,7 @@ const SubscribeEmailTable = () => {
             //align: "center",
         },
         {
-            title: "Subscribed at",
+            title: "Subscribed on",
             dataIndex: "createdAt",
             //align: "center",
             render: (text) => <p>{moment(text).format("LL")}</p>,

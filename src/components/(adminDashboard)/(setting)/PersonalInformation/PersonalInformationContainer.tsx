@@ -140,7 +140,7 @@ const PersonalInformationContainer = () => {
                 </div>
               </label>}
             </div>
-            <h3 className='text-2xl text-center'>{"Alex Jr."}</h3>
+            <h3 className='text-2xl text-center'>{"Admin"}</h3>
           </div>
         </div>
         {/* form */}
