@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button, Popconfirm, Skeleton, Empty, Collapse, message } from "antd";
-import { Plus, Pencil, Trash2, HelpCircle, ChevronDown } from "lucide-react";
+import { Plus,  Trash2, HelpCircle, ChevronDown } from "lucide-react";
 import {
   useGetFaqsQuery,
   useCreateFaqMutation,

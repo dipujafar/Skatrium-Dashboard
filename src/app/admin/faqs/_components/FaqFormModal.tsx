@@ -64,7 +64,7 @@ export default function FaqFormModal({
 
   return (
     <Modal
-      title={mode === "create" ? "Add FAQ" : "Edit FAQ"}
+      // title={mode === "create" ? "Add FAQ" : "Edit FAQ"}
       open={open}
       onCancel={onClose}
       onOk={handleSubmit(submitHandler)}
@@ -76,6 +76,7 @@ export default function FaqFormModal({
         onSubmit={handleSubmit(submitHandler)}
         className="flex flex-col gap-4 pt-2"
       >
+        <h4 className="text-lg font-semibold">{mode === "create" ? "Add FAQ" : "Edit FAQ"}</h4>
         
         <div>
           <label className="mb-1 block text-sm font-medium text-gray-200">
@@ -89,6 +90,7 @@ export default function FaqFormModal({
                 {...field}
                 placeholder="e.g. Can I submit my own events?"
                 status={errors.question ? "error" : ""}
+                className="bg-transparent hover:bg-transparent focus:bg-transparent text-white"
               />
             )}
           />
@@ -112,6 +114,7 @@ export default function FaqFormModal({
                 rows={4}
                 placeholder="Write a clear, concise answer"
                 status={errors.answer ? "error" : ""}
+                className="bg-transparent hover:bg-transparent focus:bg-transparent text-white"
               />
             )}
           />

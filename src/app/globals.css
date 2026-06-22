@@ -188,6 +188,10 @@ tspan{
   stroke: #ffffff !important;
 }
 
+.ant-input-password-icon > svg{
+  fill: #898989 !important;
+}
+
 
 @layer base {
   :root {
