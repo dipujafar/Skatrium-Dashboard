@@ -14,7 +14,7 @@ export const navLinks = [
   {
     key: "users",
     icon: <GoPeople size={18} />,
-    label: <Link href={"/admin/users"}>Users</Link>,
+    label: <Link href={"/admin/users"}>Profiles</Link>,
   },
   {
     key: "subscribe-email",

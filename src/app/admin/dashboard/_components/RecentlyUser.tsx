@@ -34,8 +34,21 @@ const userReDirect = (role: string, id: string): string => {
     default:
       return "#"
   }
-
 }
+const userRole = (role: string): string => {
+  switch (role.toLocaleLowerCase()) {
+    case "organizer":
+      return `Organiser`;
+    case "marchant":
+      return `Merchant`;
+    case "kaatedj":
+      return `Skate DJ`
+    default:
+      return "#"
+  }
+}
+
+
 
 const RecentlyUser = ({ data }: { data: any }) => {
   const [open, setOpen] = useState<boolean>(false);
@@ -79,7 +92,7 @@ const RecentlyUser = ({ data }: { data: any }) => {
     {
       title: "Type",
       dataIndex: "role",
-      render: (text) => <p className="capitalize">{text !== 'KAATEDJ' ? (text as string)?.toLocaleLowerCase() : text}</p>,
+      render: (text) => <p>{userRole(text)}</p>,
       //align: "center",
     },
     {
