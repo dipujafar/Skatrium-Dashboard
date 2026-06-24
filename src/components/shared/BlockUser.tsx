@@ -31,8 +31,9 @@ export default function BlockUser({ id, isActive }: any) {
             onConfirm={confirmBlock}
             okText="Yes"
             cancelText="No"
+            className="cursor-pointer"
         >
-            {isActive ? <CgUnblock size={22} color="#CD0335" /> : <CgUnblock size={22} color='green' />}
+            {isActive ? <CgUnblock  size={22} color="#CD0335" /> : <CgUnblock size={22} color='green' />}
         </Popconfirm>
     )
 }

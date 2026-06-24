@@ -27,8 +27,8 @@ const PersonalInformationContainer = () => {
       try {
         const formData = new FormData();
 
-        formData.append("fullName", values.name);
-        formData.append("phoneNumber", values.phoneNumber);
+        formData.append("fullName", values?.name);
+        formData.append("phoneNumber", values?.phoneNumber);
 
 
         if (fileName) {
