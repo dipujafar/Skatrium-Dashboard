@@ -24,7 +24,7 @@ export const navLinks = [
   {
     key: "complains",
     icon: <CircleAlert size={18} />,
-    label: <Link href={"/admin/complains"}>Complaints</Link>,
+    label: <Link href={"/admin/complains"}>Reviews</Link>,
   },
   {
     key: "events",
