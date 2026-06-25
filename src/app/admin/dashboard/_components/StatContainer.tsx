@@ -24,7 +24,7 @@ const StatContainer = ({ data }: { data: any }) => {
       <StatCard
         title='Total Earning'
         value={data?.totalEarning}
-        prefix="$"
+        // prefix="$"
         // change={{ value: "+6.08%", positive: true }}
         icon={<Wallet />}
         className='bg-[#211604]'

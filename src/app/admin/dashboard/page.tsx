@@ -22,7 +22,7 @@ const DashboardPage = () => {
       <div className="grid grid-cols-1 xl:grid-cols-6 gap-4">
         <div className="xl:col-span-4 space-y-4">
           <StatContainer data={data?.data?.stats} />
-          <PlatformAnalyticsChart data={data?.data?.analytics} selectedYear={selectedYear} setSetSelectedYear={setSetSelectedYear} />
+          <PlatformAnalyticsChart analytics={data?.data?.analytics} selectedYear={selectedYear} setSelectedYear={setSetSelectedYear} />
         </div>
         <EventList data={data?.data?.eventList} />
       </div>
