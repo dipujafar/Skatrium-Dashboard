@@ -116,15 +116,16 @@ const PlatformAnalyticsChart = ({
     setSelectedYear,
 }: PlatformAnalyticsChartProps) => {
 
-    const currencies = useMemo(() => {
-        return [
-            ...new Set(
-                (analytics?.data ?? []).flatMap((d) =>
-                    (d?.amount ?? []).map((a) => a?.currency).filter(Boolean)
-                )
-            ),
-        ] as string[];
-    }, [analytics?.data]);
+   const currencies = useMemo(() => {
+    return Array.from(
+        new Set(
+            (analytics?.data ?? []).flatMap((d) =>
+                (d?.amount ?? []).map((a) => a?.currency).filter(Boolean)
+            )
+        )
+    ) as string[];
+}, [analytics?.data]);
+
 
     const [selectedCurrency, setSelectedCurrency] = useState<string>(
         currencies[0] ?? "BDT"

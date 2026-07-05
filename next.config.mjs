@@ -20,6 +20,14 @@ const nextConfig = {
       },
     ];
   },
+    rewrites: async () => {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "http://103.186.20.117:1212/api/:path*", // Proxy to Backend
+      },
+    ];
+  },
   images: {
     domains: [
       "i.ibb.co.com",
