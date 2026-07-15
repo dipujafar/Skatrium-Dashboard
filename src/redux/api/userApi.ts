@@ -70,6 +70,13 @@ const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.user, tagTypes.dashboard],
     }),
+    deleteUser: builder.mutation({
+      query: (id) => ({
+        url: `/admin/delete/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [tagTypes.user, tagTypes.dashboard],
+    }),
   }),
 
   overrideExisting: true,
@@ -83,5 +90,6 @@ export const {
   useBlockedUserMutation,
   useUnBlockedUserMutation,
   useGetUsersByRoleQuery,
-  useGetUsersDetailsQuery
+  useGetUsersDetailsQuery,
+  useDeleteUserMutation,
 } = userApi;

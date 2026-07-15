@@ -10,6 +10,7 @@ import BlockUser from "@/components/shared/BlockUser";
 import { useSearchParams } from "next/navigation";
 import { useGetUsersByRoleQuery } from "@/redux/api/userApi";
 import { useDebounce } from "use-debounce";
+import UserDelete from "@/components/shared/DeleteUser";
 
 type TUser = {
   _id: number;
@@ -112,6 +113,7 @@ const DJSKATETable = () => {
             <Eye size={22} color="#78C0A8" className="cursor-pointer" />
           </Link>
           <BlockUser id={record?._id} isActive={record?.isActive} />
+          <UserDelete id={record?._id} />
         </div>
       ),
     },

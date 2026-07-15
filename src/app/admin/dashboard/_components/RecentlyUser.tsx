@@ -8,6 +8,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import BlockUser from "@/components/shared/BlockUser";
+import UserDelete from "@/components/shared/DeleteUser";
 
 type TUser = {
   _id: string;
@@ -131,6 +132,8 @@ const RecentlyUser = ({ data }: { data: any }) => {
           }
 
           <BlockUser id={record?._id} isActive={record?.isActive} />
+          <UserDelete id={record?._id} />
+
         </div>
       ),
     },

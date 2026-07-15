@@ -10,6 +10,7 @@ import { useSearchParams } from "next/navigation";
 import { useDebounce } from "use-debounce";
 import BlockUser from "@/components/shared/BlockUser";
 import { cn } from "@/lib/utils";
+import UserDelete from "@/components/shared/DeleteUser";
 
 type TUser = {
     _id: number;
@@ -104,6 +105,7 @@ const UserTable = () => {
                         className='cursor-pointer'
                     />
                     <BlockUser id={record?._id} isActive={record?.isActive} />
+                    <UserDelete id={record?._id} />
                 </div>
             ),
         },

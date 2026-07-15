@@ -10,6 +10,7 @@ import { useSearchParams } from "next/navigation";
 import { useDebounce } from "use-debounce";
 import { useGetUsersByRoleQuery } from "@/redux/api/userApi";
 import BlockUser from "@/components/shared/BlockUser";
+import UserDelete from "@/components/shared/DeleteUser";
 
 type TUser = {
   _id: number;
@@ -112,6 +113,7 @@ const OrganizerTable = () => {
             <Eye size={22} color="#78C0A8" className="cursor-pointer" />
           </Link>
           <BlockUser id={record?._id} isActive={record?.isActive} />
+          <UserDelete id={record?._id} />
         </div>
       ),
     },
