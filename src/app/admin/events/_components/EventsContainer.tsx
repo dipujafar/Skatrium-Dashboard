@@ -19,11 +19,13 @@ export default function EventsContainer() {
     if (limit) queries["limit"] = limit;
     const { data, isLoading } = useGetAllEventDataQuery(queries);
 
+    console.log(data?.data)
+
     if (isLoading) {
         return <div className={cn('h-[calc(100vh-200px)] flex items-center justify-center')}><Spin size='large' /></div>
     }
 
-    if (!data?.data?.events?.length) {
+    if (!data?.data?.data?.length) {
         return <EmptyData message='No event found' />
     }
 
@@ -34,12 +36,12 @@ export default function EventsContainer() {
             </div>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-5'>
                 {
-                    data?.data?.events?.map((event: Event, index: number) => (
+                    data?.data?.data?.map((event: Event, index: number) => (
                         <EventCard key={index} event={event} />
                     ))
                 }
             </div>
-            <PaginationSection total={data?.data?.pagination?.total} current={Number(page)} pageSize={Number(limit)} />
+            <PaginationSection total={data?.data?.meta?.total} current={Number(page)} pageSize={Number(limit)} />
         </div>
     )
 }

@@ -1,12 +1,11 @@
 import { baseApi } from "./baseApi";
 import { tagTypes } from "../tagTypes";
-import { number } from "zod";
 
 const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createUser: builder.mutation({
       query: (data) => ({
-        url: "/user/create",
+        url: "/users",
         method: "POST",
         body: data,
       }),
@@ -15,7 +14,7 @@ const userApi = baseApi.injectEndpoints({
 
     getAllUser: builder.query({
       query: (params) => ({
-        url: "/admin/allusers",
+        url: "/users",
         method: "GET",
         params,
       }),
@@ -72,7 +71,7 @@ const userApi = baseApi.injectEndpoints({
     }),
     deleteUser: builder.mutation({
       query: (id) => ({
-        url: `/admin/delete/${id}`,
+        url: `/users/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [tagTypes.user, tagTypes.dashboard],

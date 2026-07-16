@@ -8,9 +8,10 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useDebounce } from "use-debounce";
-import { useGetUsersByRoleQuery } from "@/redux/api/userApi";
+import { useGetAllUserQuery } from "@/redux/api/userApi";
 import BlockUser from "@/components/shared/BlockUser";
 import UserDelete from "@/components/shared/DeleteUser";
+import OrganizerTableDetails from "@/components/(adminDashboard)/user/OrganizerUserDetails";
 
 type TUser = {
   _id: number;
@@ -24,11 +25,13 @@ type TUser = {
   };
 };
 
-const OrganizerTable = () => {
+const OrganizerUserDetails = () => {
   const page = useSearchParams().get("page") || "1";
   const limit = useSearchParams().get("limit") || "12";
   const [searchText, setSearchText] = useState("");
   const [searchValue] = useDebounce(searchText, 500);
+  const [open, setOpen] = useState<boolean>(false);
+  const [currentData, setCurrentData] = useState<TUser>();
 
   //  set queries
   const queries: Record<string, string> = {};
@@ -41,7 +44,9 @@ const OrganizerTable = () => {
   }
   queries.role = "ORGANIZER";
 
-  const { data: usersData, isLoading } = useGetUsersByRoleQuery(queries);
+  const { data: usersData, isLoading } = useGetAllUserQuery(queries);
+
+  console.log(usersData?.data);
 
   const columns: TableProps<TUser>["columns"] = [
     {
@@ -107,11 +112,17 @@ const OrganizerTable = () => {
       title: "Action",
       dataIndex: "action",
       //align: "center",
-      render: (text, record) => (
+      render: (_, record) => (
         <div className="flex items-center gap-2">
-          <Link href={`/admin/users/organizer?id=${record?._id}`}>
-            <Eye size={22} color="#78C0A8" className="cursor-pointer" />
-          </Link>
+          <Eye
+            size={22}
+            color="#78C0A8"
+            onClick={() => {
+              setOpen(true);
+              setCurrentData(record);
+            }}
+            className="cursor-pointer"
+          />
           <BlockUser id={record?._id} isActive={record?.isActive} />
           <UserDelete id={record?._id} />
         </div>
@@ -134,14 +145,19 @@ const OrganizerTable = () => {
       <div className="rounded-2xl">
         <DataTable
           columns={columns}
-          data={usersData?.data?.users}
+          data={usersData?.data}
           isLoading={isLoading}
           pageSize={Number(limit)}
-          total={usersData?.data?.pagination?.total}
+          total={usersData?.meta?.total}
         ></DataTable>
+        <OrganizerTableDetails
+          open={open}
+          setOpen={setOpen}
+          data={currentData}
+        ></OrganizerTableDetails>
       </div>
     </div>
   );
 };
 
-export default OrganizerTable;
+export default OrganizerUserDetails;

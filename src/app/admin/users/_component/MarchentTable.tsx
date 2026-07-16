@@ -8,9 +8,10 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import BlockUser from "@/components/shared/BlockUser";
 import { useSearchParams } from "next/navigation";
-import { useGetUsersByRoleQuery } from "@/redux/api/userApi";
+import { useGetAllUserQuery } from "@/redux/api/userApi";
 import { useDebounce } from "use-debounce";
 import UserDelete from "@/components/shared/DeleteUser";
+import MarchentUserDetails from "@/components/(adminDashboard)/user/MarchentUserDetails";
 
 type TUser = {
   _id: number;
@@ -29,6 +30,8 @@ const MarchentTable = () => {
   const limit = useSearchParams().get("limit") || "12";
   const [searchText, setSearchText] = useState("");
   const [searchValue] = useDebounce(searchText, 500);
+  const [open, setOpen] = useState<boolean>(false);
+  const [currentData, setCurrentData] = useState<TUser>();
 
   //  set queries
   const queries: Record<string, string> = {};
@@ -41,7 +44,9 @@ const MarchentTable = () => {
   }
   queries.role = "MARCHANT";
 
-  const { data: usersData, isLoading } = useGetUsersByRoleQuery(queries);
+  const { data: usersData, isLoading } = useGetAllUserQuery(queries);
+
+  console.log(usersData?.data);
 
   const columns: TableProps<TUser>["columns"] = [
     {
@@ -107,11 +112,17 @@ const MarchentTable = () => {
       title: "Action",
       dataIndex: "action",
       //align: "center",
-      render: (text, record) => (
+      render: (_, record) => (
         <div className="flex items-center gap-2">
-          <Link href={`/admin/users/marchent?id=${record?._id}`}>
-            <Eye size={22} color="#78C0A8" className="cursor-pointer" />
-          </Link>
+          <Eye
+            size={22}
+            color="#78C0A8"
+            onClick={() => {
+              setOpen(true);
+              setCurrentData(record);
+            }}
+            className="cursor-pointer"
+          />
           <BlockUser id={record?._id} isActive={record?.isActive} />
           <UserDelete id={record?._id} />
         </div>
@@ -134,11 +145,16 @@ const MarchentTable = () => {
       <div className="rounded-2xl">
         <DataTable
           columns={columns}
-          data={usersData?.data?.users}
+          data={usersData?.data}
           isLoading={isLoading}
           pageSize={Number(limit)}
-          total={usersData?.data?.pagination?.total}
+          total={usersData?.meta?.total}
         ></DataTable>
+        <MarchentUserDetails
+          open={open}
+          setOpen={setOpen}
+          data={currentData}
+        ></MarchentUserDetails>
       </div>
     </div>
   );

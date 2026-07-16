@@ -5,7 +5,7 @@ const eventApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllEventData: builder.query({
       query: (params) => ({
-        url: "/event/search",
+        url: "/event",
         method: "GET",
         params,
       }),

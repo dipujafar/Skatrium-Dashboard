@@ -10,7 +10,7 @@ type TPropsType = {
   data: any;
 };
 
-const UserDetails = ({ open: user, setOpen, data }: TPropsType) => {
+const DJSKATETUserDetails = ({ open: user, setOpen, data }: TPropsType) => {
   const [currentData, setCurrentData] = useState<any>();
 
   useEffect(() => {
@@ -66,6 +66,10 @@ const UserDetails = ({ open: user, setOpen, data }: TPropsType) => {
             <h4>User name </h4>
             <p className="font-medium">{currentData?.fullName}</p>
           </div>
+          <div className="flex justify-between bg-[#21424617] py-3 px-2 border-b ">
+            <h4>DJ Name</h4>
+            <p className="font-medium">{currentData?.djname}</p>
+          </div>
 
           <div className="flex justify-between py-3  px-2 border-b">
             <h4>Email </h4>
@@ -88,7 +92,7 @@ const UserDetails = ({ open: user, setOpen, data }: TPropsType) => {
           <div className="flex justify-between  bg-[#21424617] py-3 px-2 border-b">
             <h4>Role</h4>
             <p className="font-medium capitalize">
-              {(currentData?.role as string)?.toLocaleLowerCase()}
+              Skate DJ
             </p>
           </div>
           {/*<div className='flex justify-between   py-3 px-2 border-b'>
@@ -104,7 +108,7 @@ const UserDetails = ({ open: user, setOpen, data }: TPropsType) => {
             <p className='font-medium'>5 days streak</p>
           </div>*/}
           <div className="flex justify-between  bg-[#21424617] py-3 px-2 border-b">
-            <h4>Status </h4>
+            <h4>Status</h4>
             <p
               className={cn(
                 "text-[#4BB54B]",
@@ -135,4 +139,4 @@ const UserDetails = ({ open: user, setOpen, data }: TPropsType) => {
   );
 };
 
-export default UserDetails;
+export default DJSKATETUserDetails;

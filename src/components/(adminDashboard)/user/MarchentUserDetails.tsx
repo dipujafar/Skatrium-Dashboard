@@ -10,7 +10,7 @@ type TPropsType = {
   data: any;
 };
 
-const UserDetails = ({ open: user, setOpen, data }: TPropsType) => {
+const MarchentUserDetails = ({ open: user, setOpen, data }: TPropsType) => {
   const [currentData, setCurrentData] = useState<any>();
 
   useEffect(() => {
@@ -88,7 +88,7 @@ const UserDetails = ({ open: user, setOpen, data }: TPropsType) => {
           <div className="flex justify-between  bg-[#21424617] py-3 px-2 border-b">
             <h4>Role</h4>
             <p className="font-medium capitalize">
-              {(currentData?.role as string)?.toLocaleLowerCase()}
+              Merchant
             </p>
           </div>
           {/*<div className='flex justify-between   py-3 px-2 border-b'>
@@ -135,4 +135,4 @@ const UserDetails = ({ open: user, setOpen, data }: TPropsType) => {
   );
 };
 
-export default UserDetails;
+export default MarchentUserDetails;
