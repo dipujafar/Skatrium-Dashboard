@@ -120,7 +120,7 @@ const OrganizerUserDetails = ({ open: user, setOpen, data }: TPropsType) => {
           </div>
           <div className="flex justify-between  bg-[#21424617] py-3 px-2 border-b">
             <h4>Country </h4>
-            <p className="font-medium">{currentData?.country}</p>
+              <p className="font-medium">{currentData?.country || "N/A"} </p>
           </div>
 
           <div className="flex justify-between py-3 px-2">
