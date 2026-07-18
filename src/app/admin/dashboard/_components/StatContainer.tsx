@@ -3,6 +3,25 @@ import { StatCard } from "@/components/shared/StatCard";
 import { Tickets, UserRound, Wallet } from "lucide-react";
 
 const StatContainer = ({ data }: { data: any }) => {
+
+  const eventEaring = [
+    {
+      amount: 7000,
+      currency: "BDT",
+    }
+  ]
+  const subscriptionEaring = [
+    {
+      amount: 600,
+      currency: "BDT",
+    },
+    {
+      amount: 8,
+      currency: "USD",
+    }
+  ]
+  
+
   return (
     <div className={`grid grid-cols-1 lg:grid-cols-3 gap-4 `}>
       <StatCard
@@ -22,8 +41,17 @@ const StatContainer = ({ data }: { data: any }) => {
         className='bg-[#211604]'
       />
       <StatCard
-        title='Total Earning'
-        value={data?.totalEarning}
+        title='Subscription Earning'
+        // value={data?.totalEarning}
+        value={subscriptionEaring}
+        // prefix="$"
+        // change={{ value: "+6.08%", positive: true }}
+        icon={<Wallet />}
+        className='bg-[#211604]'
+      />
+      <StatCard
+        title='Event Earning'
+        value={eventEaring}
         // prefix="$"
         // change={{ value: "+6.08%", positive: true }}
         icon={<Wallet />}

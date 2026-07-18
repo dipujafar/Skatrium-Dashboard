@@ -36,12 +36,27 @@ export function StatCard({
           {icon && icon}
           <div className="flex items-center gap-0.5">
             <span className="text-xl">{prefix}</span>
-            {title !== "Total Earning" && (
+            {title !== "Subscription Earning" && title !== "Event Earning" && (
               <p className="text-xl font-medium">
                 <CountUp end={Number(value)} />
               </p>
             )}
-            {title === "Total Earning" && (
+            {title === "Subscription Earning" && (
+              <div className="flex flex-wrap items-center gap-2.5">
+                {(value as TEarningData[]).map((item: any, index: number) => (
+                  <p key={index} className="text-lg font-medium flex gap-1">
+                    <CountUp end={Number(item?.amount)} />
+                    <div>
+                      <span>{item?.currency}</span>
+                      {index !== (value as TEarningData[]).length - 1 && (
+                        <span>,</span>
+                      )}
+                    </div>
+                  </p>
+                ))}
+              </div>
+            )}
+            {title === "Event Earning" && (
               <div className="flex flex-wrap items-center gap-2.5">
                 {(value as TEarningData[]).map((item: any, index: number) => (
                   <p key={index} className="text-lg font-medium flex gap-1">
