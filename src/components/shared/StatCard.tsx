@@ -36,16 +36,17 @@ export function StatCard({
           {icon && icon}
           <div className="flex items-center gap-0.5">
             <span className="text-xl">{prefix}</span>
-            {title !== "Subscription Earning" && title !== "Event Earning" && (
+            {title !== "Subscription Earnings" && title !== "Event Earnings" && (
               <p className="text-xl font-medium">
                 <CountUp end={Number(value)} />
               </p>
             )}
-            {title === "Subscription Earning" && (
+            {title === "Subscription Earnings" && (
               <div className="flex flex-wrap items-center gap-2.5">
                 {(value as TEarningData[]).map((item: any, index: number) => (
                   <p key={index} className="text-lg font-medium flex gap-1">
-                    <CountUp end={Number(item?.amount)} />
+                    {/* <CountUp end={item?.amount} /> */}
+                    {item?.amount}
                     <div>
                       <span>{item?.currency}</span>
                       {index !== (value as TEarningData[]).length - 1 && (
@@ -56,11 +57,13 @@ export function StatCard({
                 ))}
               </div>
             )}
-            {title === "Event Earning" && (
+            {title === "Event Earnings" && (
               <div className="flex flex-wrap items-center gap-2.5">
                 {(value as TEarningData[]).map((item: any, index: number) => (
                   <p key={index} className="text-lg font-medium flex gap-1">
-                    <CountUp end={Number(item?.amount)} />
+                    {/* <CountUp end={Number(item?.amount)} />
+                     */}
+                     {item?.amount}
                     <div>
                       <span>{item?.currency}</span>
                       {index !== (value as TEarningData[]).length - 1 && (

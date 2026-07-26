@@ -16,7 +16,7 @@ const StatContainer = ({ data }: { data: any }) => {
       currency: "BDT",
     },
     {
-      amount: 8,
+      amount: 7.73,
       currency: "USD",
     }
   ]
@@ -41,7 +41,7 @@ const StatContainer = ({ data }: { data: any }) => {
         className='bg-[#211604]'
       />
       <StatCard
-        title='Subscription Earning'
+        title='Subscription Earnings'
         // value={data?.totalEarning}
         value={subscriptionEaring}
         // prefix="$"
@@ -50,7 +50,7 @@ const StatContainer = ({ data }: { data: any }) => {
         className='bg-[#211604]'
       />
       <StatCard
-        title='Event Earning'
+        title='Event Earnings'
         value={eventEaring}
         // prefix="$"
         // change={{ value: "+6.08%", positive: true }}
