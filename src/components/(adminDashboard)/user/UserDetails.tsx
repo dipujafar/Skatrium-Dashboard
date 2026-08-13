@@ -13,6 +13,8 @@ type TPropsType = {
 const UserDetails = ({ open: user, setOpen, data }: TPropsType) => {
   const [currentData, setCurrentData] = useState<any>();
 
+  console.log(data);
+
   useEffect(() => {
     setCurrentData(data);
   }, [data]);
