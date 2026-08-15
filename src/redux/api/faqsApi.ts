@@ -43,7 +43,7 @@ const faqsApi = baseApi.injectEndpoints({
     updateFaq: builder.mutation<Faq, UpdateFaqPayload>({
       query: (data) => ({
         url: `/faq/faqs/${data.id}`,
-        method: "PATCH",
+        method: "PUT",
         body: data,
       }),
       invalidatesTags: [tagTypes.faqs],

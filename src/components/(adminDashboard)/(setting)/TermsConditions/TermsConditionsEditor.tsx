@@ -12,7 +12,7 @@ import { toast } from "sonner";
 // Dynamically import ReactQuill with SSR disabled
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-const TermsConditionsEditor = ({ data, role }: any) => {
+const TermsConditionsEditor = ({ data }: any) => {
   const [value, setValue] = useState(data?.content || "");
   const [updateSetting, { isLoading }] = useUpdateSettingsMutation();
 
@@ -34,12 +34,11 @@ const TermsConditionsEditor = ({ data, role }: any) => {
   const handleUpdateSettings = async () => {
     try {
       await updateSetting({
-        role,
         type: "terms_conditions",
         content: value,
       }).unwrap();
 
-      toast.success(`${role} Terms & Conditions updated successfully`);
+      toast.success(`Terms & Conditions updated successfully`);
     } catch (error: any) {
       Error_Modal({ title: error?.data?.message });
     }

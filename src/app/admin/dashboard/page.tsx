@@ -15,14 +15,25 @@ const DashboardPage = () => {
   queries.limit = 5;
   const { data, isLoading } = useGetDashboardPageDataQuery(queries);
 
-  if (isLoading) return <div className="flex justify-center items-center min-h-[calc(100vh-150px)]"><Spin size="large" /></div>
+  console.log(data);
+
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center min-h-[calc(100vh-150px)]">
+        <Spin size="large" />
+      </div>
+    );
 
   return (
     <div className="lg:space-y-5 space-y-3 ">
       <div className="grid grid-cols-1 xl:grid-cols-6 gap-4">
         <div className="xl:col-span-4 space-y-4">
           <StatContainer data={data?.data?.stats} />
-          <PlatformAnalyticsChart analytics={data?.data?.analytics} selectedYear={selectedYear} setSelectedYear={setSetSelectedYear} />
+          <PlatformAnalyticsChart
+            analytics={data?.data?.analytics}
+            selectedYear={selectedYear}
+            setSelectedYear={setSetSelectedYear}
+          />
         </div>
         <EventList data={data?.data?.eventList} />
       </div>

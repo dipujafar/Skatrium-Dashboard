@@ -11,7 +11,7 @@ import { toast } from "sonner";
 // Dynamically import ReactQuill with SSR disabled
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-const AboutUsEditor = ({ data, role }: any) => {
+const AboutUsEditor = ({ data }: any) => {
 
   const [value, setValue] = useState(
     data?.content || ""
@@ -35,12 +35,11 @@ const AboutUsEditor = ({ data, role }: any) => {
   const handleUpdateSettings = async () => {
     try {
       await updateSetting({
-        role,
         type: "about_us",
         content: value,
       }).unwrap();
 
-      toast.success(`${role} about us updated successfully`);
+      toast.success(`About us updated successfully`);
     } catch (error: any) {
       Error_Modal({ title: error?.data?.message });
     }

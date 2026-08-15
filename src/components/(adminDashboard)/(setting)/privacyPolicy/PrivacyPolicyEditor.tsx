@@ -11,7 +11,7 @@ import { toast } from "sonner";
 // Dynamically import ReactQuill with SSR disabled
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-const PrivacyPolicyEditor = ({ data, role }: any) => {
+const PrivacyPolicyEditor = ({ data }: any) => {
   const [value, setValue] = useState(data?.content || "");
   const [updateSetting, { isLoading }] = useUpdateSettingsMutation();
   const toolbarOptions = [
@@ -32,12 +32,11 @@ const PrivacyPolicyEditor = ({ data, role }: any) => {
   const handleUpdateSettings = async () => {
     try {
       await updateSetting({
-        role,
         type: "privacy_policy",
         content: value,
       }).unwrap();
 
-      toast.success(`${role} Privacy Policy updated successfully`);
+      toast.success(`Privacy Policy updated successfully`);
     } catch (error: any) {
       Error_Modal({ title: error?.data?.message });
     }

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button, Popconfirm, Skeleton, Empty, Collapse, message } from "antd";
-import { Plus,  Trash2, HelpCircle, ChevronDown } from "lucide-react";
+import { Plus,  Trash2, HelpCircle, ChevronDown, Pencil, SquarePen } from "lucide-react";
 import {
   useGetFaqsQuery,
   useCreateFaqMutation,
@@ -117,14 +117,14 @@ export default function FAQsContainer() {
                 onClick={(e) => e.stopPropagation()}
                 className="flex items-center gap-1"
               >
-                {/* <button
+                <button
                   type="button"
                   onClick={() => openEditModal(faq)}
-                  className="rounded-md p-2 text-gray-200 hover:bg-gray-100 hover:text-blue-600"
+                  className="rounded-md p-2 bg-gray-100 text-blue-600 hover:bg-gray-300 hover:text-blue-900"
                   aria-label="Edit FAQ"
                 >
-                  <Pencil className="h-4 w-4" />
-                </button> */}
+                  <SquarePen className="h-4 w-4" />
+                </button>
                 <Popconfirm
                   title="Delete this FAQ?"
                   description="This action can't be undone."
