@@ -46,7 +46,6 @@ const OrganizerUserDetails = () => {
 
   const { data: usersData, isLoading } = useGetAllUserQuery(queries);
 
-  console.log(usersData?.data);
 
   const columns: TableProps<TUser>["columns"] = [
     {

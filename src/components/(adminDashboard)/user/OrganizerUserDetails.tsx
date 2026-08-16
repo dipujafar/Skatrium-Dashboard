@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Image, Modal } from "antd";
 import moment from "moment";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { RiCloseLargeLine } from "react-icons/ri";
 
@@ -10,12 +11,23 @@ type TPropsType = {
   data: any;
 };
 
+const formatLabel = (key: string) =>
+  key
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
+    .replace(/^./, (str) => str.toUpperCase());
+
 const OrganizerUserDetails = ({ open: user, setOpen, data }: TPropsType) => {
   const [currentData, setCurrentData] = useState<any>();
 
   useEffect(() => {
     setCurrentData(data);
   }, [data]);
+
+  const { shopName, _id, shoptype, ...socialLinks } =
+    currentData?.socialLinks || {};
+  const socialLinkEntries = Object.entries(socialLinks).filter(
+    ([, value]) => !!value,
+  );
 
   return (
     <Modal
@@ -87,9 +99,7 @@ const OrganizerUserDetails = ({ open: user, setOpen, data }: TPropsType) => {
           </div>*/}
           <div className="flex justify-between  bg-[#21424617] py-3 px-2 border-b">
             <h4>Role</h4>
-            <p className="font-medium capitalize">
-              Organiser
-            </p>
+            <p className="font-medium capitalize">Organiser</p>
           </div>
           {/*<div className='flex justify-between   py-3 px-2 border-b'>
             <h4>Subscription Plan </h4>
@@ -103,6 +113,15 @@ const OrganizerUserDetails = ({ open: user, setOpen, data }: TPropsType) => {
             <h4>Streak Progress </h4>
             <p className='font-medium'>5 days streak</p>
           </div>*/}
+          {currentData?.socialLinks?.shopName && (
+            <div className="flex justify-between bg-[#21424617] py-3 px-2 border-b">
+              <h4>Organisation Name </h4>
+              <p className="font-medium">
+                {currentData?.socialLinks?.shopName || "N/A"}
+              </p>
+            </div>
+          )}
+
           <div className="flex justify-between  bg-[#21424617] py-3 px-2 border-b">
             <h4>Status </h4>
             <p
@@ -114,13 +133,14 @@ const OrganizerUserDetails = ({ open: user, setOpen, data }: TPropsType) => {
               {currentData?.isActive ? "Active" : "Blocked"}
             </p>
           </div>
+
           <div className="flex justify-between bg-[#21424617] py-3 px-2 border-b">
             <h4>How did you hear </h4>
             <p className="font-medium">{currentData?.howDidYouHear || "N/A"}</p>
           </div>
           <div className="flex justify-between  bg-[#21424617] py-3 px-2 border-b">
             <h4>Country </h4>
-              <p className="font-medium">{currentData?.country || "N/A"} </p>
+            <p className="font-medium">{currentData?.country || "N/A"} </p>
           </div>
 
           <div className="flex justify-between py-3 px-2">
@@ -128,6 +148,36 @@ const OrganizerUserDetails = ({ open: user, setOpen, data }: TPropsType) => {
             <p className="font-medium">
               {moment(currentData?.createdAt).format("LL")}
             </p>
+          </div>
+
+          {/* ========================== social links ============================== */}
+
+          <div>
+            <h2 className=" font-semibold text-gray-300 mt-3 mb-1 px-2">
+              Social Links
+            </h2>
+            {socialLinkEntries.length === 0 ? (
+              <p className="text-center text-xs text-gray-400 pb-3">
+                No social media added
+              </p>
+            ) : (
+              socialLinkEntries.map(([key, value]) => (
+                <div
+                  key={key}
+                  className="flex justify-between items-center bg-[#21424617] py-3 px-2 border-b"
+                >
+                  <h4>{formatLabel(key)}</h4>
+                  <Link
+                    href={value as string}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs font-medium text-blue-400 hover:text-blue-300 underline"
+                  >
+                    View
+                  </Link>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>
