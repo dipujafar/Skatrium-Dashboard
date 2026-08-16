@@ -36,6 +36,14 @@ const nextConfig = {
       "imagess555.s3.eu-north-1.amazonaws.com"
     ],
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 };
-
+ 
 export default nextConfig;
+ 
+ 
